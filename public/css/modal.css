@@ -1,0 +1,444 @@
+
+
+
+
+
+/* 로그인 모달 */
+/* login을 누를 시 팝업이 뜨면서 배경을 검게 만듬 */
+.background{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    /* 색 및 투명도 조절 */
+    background-color: rgba(0,0,0,0.3);
+    z-index: 1000;
+
+    /* 숨기기 X */
+    z-index: -1;
+    opacity: 0;
+}
+
+
+
+.window{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.popup_1{
+    position : absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(255, 255, 255,0.9);
+    opacity: 1;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.3);
+
+    /* 임시 */
+    width: 500px;
+    height: 400px;
+
+    /* 아래에 배치 */
+    transform: translate(-50%,-40%);
+}
+
+
+
+.show {
+    opacity: 1;
+    z-index: 1000;
+    transition: all .5s;
+  }
+
+
+
+
+.show .popup_1{
+    transform: translate(-50%,-50%);
+    transition: all .5s;
+}
+
+
+
+
+#close{
+    position: absolute;
+    right: 0;
+}
+
+
+
+
+/* 채팅 모달 구간 */
+
+.background2{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+
+  /* 숨기기 X */
+  z-index: -1;
+  opacity: 0;
+}
+
+.window2{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.popup_2{
+  position : fixed;
+  bottom: -50%;
+  right: 5px;
+  /* 상단 위 부분을 둥글게 설정 */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: rgba(0,0,0,1);
+  box-shadow: 0 2px 7px rgba(0,0,0,0.3);
+  color: white;
+  text-align: center;
+
+  /* 채팅창의 크기 */
+  width: 580px;
+  height: 80%;
+
+  transform: translate(0,50%);
+
+}
+@media (max-width: 768px) {
+  .popup_2 {
+    position: fixed;
+    width: 580px;
+    max-height: 80%;
+    height: 80%;
+    right: 0;
+  }
+}
+
+@font-face {
+  font-family: 'Cafe24Ssurround';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 채팅 기능 css */
+.chat{
+  width: 95%;
+  margin: auto;
+  height: 600px;
+  overflow: auto;
+  padding: 10px;
+  background-color: floralwhite;
+  word-break: break-word;
+}
+/* 채팅 스크롤바 스타일 꾸미기 */
+.chat::-webkit-scrollbar {
+  width: 10px;
+}
+.chat::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.chat::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+.chat-list {
+  list-style-type: none;
+  color: white;
+  min-width: 200px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.chat-list li {
+  margin-bottom: 10px;
+  border-radius: 10px;
+  display: inline-block;
+  position: relative;
+  min-width: 200px;
+  max-width: 100%;
+  padding: 10px 14px;
+}
+
+.chat-left {
+  background-color: lightgray;
+  color: black;
+  margin-right: 10px;
+  max-width: 70%;
+  clear: both;
+  float: left;
+  display: flex;
+  flex-direction: row;
+}
+
+.chat-right {
+  background-color: #d8ecff;;
+  color: black;
+  max-width: 70%;
+  clear: both;
+  float: right;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+}
+
+.chat-nick {
+  font-family: 'GmarketSansMedium';
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.chat-content {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.chat-time {
+  margin-top: -2px;
+  font-size: 13px;
+  line-height: 1.54;
+  letter-spacing: -0.2px;
+  color: gray;
+  position: absolute;
+  top: 12px;
+  right: 14px;
+}
+
+
+#myTextarea{
+  width: 450px;
+  height: 20px;
+  margin-left: 30px; 
+  border: none; 
+  padding: 10px; 
+  resize: none; 
+  overflow: hidden;
+}
+
+
+div#title{
+  padding: 3px;
+  margin-bottom: 5px;
+}
+
+div#title>h1{
+  padding-top: 5px;
+  color: white;
+  font-family: 'Cafe24Ssurround';
+  font-weight: lighter;
+}
+
+.chat-left:hover{
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* 끝 */
+
+textarea:focus{
+  outline: none;
+}
+
+/* Webkit 브라우저에서만 사용 가능(어지간한 대부분의 브라우저) */
+textarea::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+
+/* 메세지 전송버튼(엔터가능) */
+.submit{
+  position: fixed;
+  right: 25px;
+  margin-top: 2px;
+}
+
+.show2 {
+  opacity: 1;
+  z-index: 1000;
+  transition: all .5s;
+}
+
+.show2 .popup_2{
+  transition: all .5s;
+  transform: translate(0,-60%);
+}
+
+#close2{
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+/* 채팅모달의 글씨체 */
+
+h1{
+  font-family: 'Nexon Lv2 Gothic';
+  font-weight: lighter;
+  font-size: 25px;
+}
+
+
+.message{
+  background-color: #fff;
+  margin-top: 26px;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  height: 40px;
+  width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 26px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* 모달 팝업의 로그인 / 회원가입의 css */
+
+.login-wrap {
+  width: 100%;
+  margin: auto;
+  max-width: 525px;
+  position: relative;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+}
+
+.login-html {
+  padding: 5px 20px 0px 20px;
+}
+
+.login-html .sign-in,
+.login-html .sign-up,
+.login-form .group .check {
+  display: none;
+}
+
+.login-html .sign-in-htm,
+.login-html .sign-up-htm {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  /* 회원가입과 로그인이 돌아가는 속도 조정 */
+  transition: all .4s linear;
+}
+
+
+
+
+/* 로그인,회원가입 탭 css */
+.login-html .sign-in:checked+.tab,
+.login-html .sign-up:checked+.tab {
+  border-color: #000000;
+  color: #000000;
+  margin-top: 5px;
+
+}
+
+.login-html .tab {
+  color: #adb5bd;
+  font-size: 22px;
+  margin-right: 15px;
+  padding-bottom: 5px;
+  margin: 0 15px 10px 0;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
+}
+
+.login-html .tab,
+.login-form .group .label,
+.login-form .group .button {
+  text-transform: uppercase;
+}
+
+
+
+.modal {
+  display: none; /* 모달 창 초기 상태는 안 보이도록 설정 */
+  position: fixed; /* 모달 창이 스크롤에 따라 이동하지 않도록 설정 */
+  z-index: 1; /* 모달 창이 다른 요소보다 위에 나타나도록 설정 */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.4); /* 배경을 어둡게 설정 */
+}
+
+.modal-content {
+  display: flex;
+  position: relative;
+  top: 50%;
+  flex-direction: column;
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 400px;
+  height: auto;
+  margin: auto;
+  transform: translate(0,-100%);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2.7rem 2.4rem 0px;
+  border-radius: 5px;
+}
+
+.modal_header{
+  width: 100%; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: stretch;
+}
+
+
+.modal_title{
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.modal span{
+  font-family: 'GmarketSansMedium';
+}
+
+
+.close3 {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close3:hover,
+.close3:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

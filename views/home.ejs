@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 홈페이지 상단로고 -->
+    <link href="/assets/logo.png" rel="shortcut icon" type="image/x-icon">
+
+    <!-- 폰트 설정-->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!-- 로고 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+
+    <!-- 메인 css -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    <!-- 모달 css -->
+    <link rel="stylesheet" type="text/css" href="/css/modal.css">
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/swiper-bundle.css" />
+    <link rel="stylesheet" type="text/css" href="/css/swiper.css">
+
+    <!-- 스윗 얼럿 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+</head>
+
+<body>
+    <!-- 메인 틀 -->
+    <div class="mainpage">
+        <!-- 회원가입/로그인 모달창 -->
+        <div class="background">
+            <div class="window">
+                <div class="popup_1">
+                    <div class="login-wrap">
+                        <button id="close">x</button>
+                        <div class="login-html">
+                            <!-- 회원가입/로그인 탭 -->
+                            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1"
+                                class="tab">로그인</label>
+                            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2"
+                                class="tab">가입하기</label>
+
+                            <div class="login-form">
+                                <!-- 로그인 화면 -->
+                                <form action="/login" method="post" id="lform">
+                                    <div class="sign-in-htm">
+                                        <!-- 아이디 입력 -->
+                                        <div class="group">
+                                            <input id="user" name="luser" type="text" class="input"
+                                                placeholder="아이디를 입력하세요." required>
+                                        </div>
+                                        <!-- 비밀번호 입력 -->
+                                        <div class="group">
+                                            <input id="pass" name="lpass" type="password" class="input"
+                                                data-type="password" placeholder="비밀번호를 입력하세요." required>
+                                        </div>
+                                        <!-- 로그인 버튼 -->
+                                        <div class="group" id="login_btn">
+                                            <button type="submit" value="Sign In">로그인</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- 회원가입 화면 -->
+                                <form action="/register" method="post" id="rform">
+                                    <div class="sign-up-htm">
+                                        <!-- 닉네임 -->
+                                        <div class="group">
+                                            <input name="nick" id="nick" type="text" class="input"
+                                                placeholder="사용할 닉네임 입력" required>
+                                        </div>
+                                        <!-- 아이디 -->
+                                        <div class="group">
+                                            <input name="user" id="user2" type="text" class="input" placeholder="아이디 입력"
+                                                required>
+                                        </div>
+                                        <!-- 비밀번호 -->
+                                        <div class="group">
+                                            <input name="pass" id="pass" type="password" class="input"
+                                                data-type="password" placeholder="비밀번호 입력" required>
+                                        </div>
+                                        <!-- 비밀번호 확인 -->
+                                        <div class="group">
+                                            <input name="confirm-pass" id="pass" type="password" class="input"
+                                                data-type="password" placeholder="비밀번호 재입력" required>
+                                        </div>
+                                        <!-- 성별 -->
+                                        <div class="select">
+                                            <input name="gender" type="radio" id="select" value="M"><label
+                                                for="select">남성</label>
+                                            <input name="gender" type="radio" id="select2" value="W"><label
+                                                for="select2">여성</label>
+                                        </div>
+                                        <!-- 생년월일 -->
+                                        <div>
+                                            <label id="yymd" for="yy">생년월일</label>
+                                            <div id="bir_wrap">
+                                                <div id="bir_yy">
+                                                    <span class="box">
+                                                        <input type="date" id="yy" class="int" maxlength="4"
+                                                            placeholder="yyyy" name="birth">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <span class="error_next_box"></span>
+                                        </div>
+                                        <!-- 가입하기 -->
+                                        <div class="group" id="submit_btn">
+                                            <button type="submit" value="Sign Up">가입하기</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 채팅 모달창 -->
+        <div class="background2">
+            <div class="window2">
+                <div class="popup_2">
+                    <button id="close2">x</button>
+                    <div id="title">
+                        <h1>CHAT</h1>
+                    </div>
+
+                    <!-- 채팅 출력 -->
+                    <div class="chat">
+                        <ul class="chat-list"></ul>
+                    </div>
+
+                    <!-- 채팅 입력 / 전송 -->
+                    <form id="chat-form" action="/chat" method="post">
+                        <div class="input-div">
+                            <div class="message">
+                                <!-- 메세지 입력 -->
+                                <textarea id="myTextarea" name="message" rows="3" maxlength="200"
+                                    placeholder="최대 200자까지 입력 가능합니다"></textarea>
+                                <!-- 전송 버튼 -->
+                                <button type="submit" id="chat_btn" class="submit">전송</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지 TOP 버튼 -->
+        <div id="btn_top">
+            <img src="/assets/up-arrow.png" alt="top">
+        </div>
+
+        <!-- 메인페이지 -->
+        <div class="wrap">
+            <!-- 메인 상단 화면 배경 -->
+            <div class="intro_bg">
+                <div class="header" id="link_header">
+                    <!-- 메인 상단 헤더 글씨 파트 -->
+                    <ul class="nav">
+                        <!-- 메인 상단 로고 -->
+                        <div class="logo_logo">
+                            <li><img src="/assets/logo2.png" class="logo_img" alt=""></li>
+                            <li>
+                                <a id="logo" href="/">Toprospect</a>
+                            </li>
+                        </div>
+                        <!-- 로그인 했을 경우 -->
+                        <% if (memNick) { %>
+                            <li><a href="/logout" class="click_btn">LOGOUT</a></li>
+                            <li><a id="show2" class="click_btn">CHAT</a></li>
+                            <!-- 로그인 안했을 경우 -->
+                            <% } else { %>
+                                <li><a id="show" class="click_btn">LOGIN</a></li>
+                                <% } %>
+                    </ul>
+                </div>
+                <!-- 이미지 주소 가져옴 -->
+                <div class="intro_text">
+
+                </div>
+                <!-- 검색 파트 시작 -->
+                <!-- 검색은 로그인이 된 상태로만 사용 가능! 로그인이 안된 상태로 로그인 할 시 알림창으로 로그인 후 이용 가능하다는 알림을 보내기! -->
+                <div class="searchAreacover">
+                    <div class="searchArea">
+                        <form id="sform" action="/search" method="get">
+                            <!--  로그인 했을 경우 -->
+                            <% if (memNick) { %>
+                                <!-- 검색창 -->
+                                <input name="search" id="search" type="search" placeholder="후보자를 검색하세요.">
+                                <!-- 검색 버튼 -->
+                                <button type="submit" id="span_btn" class="search">검색</button>
+                                <!-- 로그인 안했을 경우 -->
+                                <% } else { %>
+                                    <!-- 검색창 -->
+                                    <input id="search" type="search" placeholder="Search">
+                                    <!-- 검색 버튼 클릭 시 알터 창 출력-->
+                                    <button type="button" id="span_btn" class="search" onclick="Swal.fire({
+                                    icon: 'warning',
+                                    text: '로그인이 필요한 기능입니다',
+                                    confirmButtonColor: '#ffcd00',
+                                    confirmButtonText: '확인'
+                                });">검색</button>
+                                    <% } %>
+                        </form>
+                    </div>
+                </div>
+                <!-- 검색 파트 끝 -->
+            </div>
+        </div>
+
+
+        <!-- ----------------------------- 메인 상단 끝 ----------------------------- -->
+
+
+        <!-- 후보들 선거 포스터를 swiper로 구현한 부분 -->
+        <div class="amount">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide mySwiper_slid">
+                        <img src="/assets/moon.jfif" alt="문재인">
+                    </div>
+                    <div class="swiper-slide mySwiper_slid">
+                        <img src="/assets/an.jfif" alt="안철수">
+                    </div>
+                    <div class="swiper-slide mySwiper_slid">
+                        <img src="/assets/hong.jfif" alt="홍준표">
+                    </div>
+                    <div class="swiper-slide mySwiper_slid">
+                        <img src="/assets/yun.jpg" alt="윤석열">
+                    </div>
+                    <div class="swiper-slide mySwiper_slid">
+                        <img src="/assets/lee.jfif" alt="이재명">
+                    </div>
+                    <div class="swiper-slide mySwiper_slid">
+                        <img src="/assets/sim.jfif" alt="심상정">
+                    </div>
+                </div>
+
+
+                <!-- 네비게이션 버튼 -->
+                <!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+                <div id="swiper_btn" class="swiper-button-next"></div>
+                <!-- 이전 버튼 -->
+                <div id="swiper_btn" class="swiper-button-prev"></div>
+            </div>
+        </div>
+
+
+        <!-- ----------------------------- 포스터 중간 끝 ----------------------------- -->
+
+
+        <!-- 연관키워드 -->
+        <div class="main_text0" id="link_main_text0">
+            <!-- 연관키워드 백그라운드 이미지(투명) -->
+            <div class="background3">
+                <div class="background4">
+                    <div class="main_text_title">
+                        <div class="kyword">
+                            <h1>연관키워드</h1>
+                        </div>
+                        <div class="contents1">후보와 관련된 <span class="middle">연관키워드</span>를 알아보세요.</div>
+                    </div>
+
+                    <!-- 메인 아이콘 -->
+                    <div class="container">
+                        <!-- bixi1=(한명분 스와이퍼) 시작 -->
+                        <div class="boxi1">
+                            <h2>문재인</h2>
+                            <!-- 스와이프 컨테이너 시작 -->
+                            <div class="swiper-container">
+                                <div class="swiper swiper2 mySwiper1">
+                                    <!-- 스와이프 wrapper 시작 -->
+                                    <div class="swiper-wrapper">
+                                        <!-- 여기가 키워드의 시작 -->
+                                        <% for(var i=0; i<10; i++) { %>
+                                            <div class="swiper-slide slide2"></div>
+                                            <% } %>
+                                                <!-- 여기가 키워드의 끝 -->
+                                    </div>
+                                    <!-- 스와이프 wrapper 끝 -->
+                                    <!-- 스와이프 페이지네이션 시작 -->
+                                    <div class="swiper-pagination"></div>
+                                    <!-- 스와이프 페이지네이션 시작 -->
+                                </div>
+                            </div>
+                            <!-- 스와이프 컨테이너 끝 -->
+                        </div>
+                        <!-- boxi1 끝 -->
+
+                        <!-- boxi1 시작 -->
+                        <div class="boxi1">
+                            <h2>안철수</h2>
+                            <div class="swiper-container">
+                                <div class="swiper swiper2 mySwiper2">
+                                    <div class="swiper-wrapper">
+                                        <% for(var i=0; i<10; i++) { %>
+                                            <div class="swiper-slide slide2"></div>
+                                            <% } %>
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- boxi1 끝 -->
+
+                        <!-- boxi1 시작 -->
+                        <div class="boxi1">
+                            <h2>홍준표</h2>
+                            <div class="swiper-container">
+                                <div class="swiper swiper2 mySwiper3">
+                                    <div class="swiper-wrapper">
+                                        <% for(var i=0; i<10; i++) { %>
+                                            <div class="swiper-slide slide2"></div>
+                                            <% } %>
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- boxi1 끝 -->
+
+                    </div>
+                    <!-- 컨테이너의 끝 -->
+
+
+
+
+                    <!-- 컨테이너 시작(하단 3명) -->
+                    <div class="container">
+                        <!-- boxi1 시작 -->
+                        <div class="boxi1">
+                            <h2>윤석열</h2>
+                            <div class="swiper-container">
+                                <div class="swiper swiper2 mySwiper4">
+                                    <div class="swiper-wrapper">
+                                        <% for(var i=0; i<10; i++) { %>
+                                            <div class="swiper-slide slide2"></div>
+                                            <% } %>
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- boxi1 끝 -->
+
+                        <!-- boxi1 시작 -->
+                        <div class="boxi1">
+                            <h2>이재명</h2>
+                            <div class="swiper-container">
+                                <div class="swiper swiper2 mySwiper5">
+                                    <div class="swiper-wrapper">
+                                        <% for(var i=0; i<10; i++) { %>
+                                            <div class="swiper-slide slide2"></div>
+                                            <% } %>
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- boxi1 끝 -->
+
+                        <!-- boxi1 시작 -->
+                        <div class="boxi1">
+                            <h2>심상정</h2>
+                            <div class="swiper-container swiper2_con">
+                                <div class="swiper swiper2 mySwiper6">
+                                    <div class="swiper-wrapper">
+                                        <% for(var i=0; i<10; i++) { %>
+                                            <div class="swiper-slide slide2"></div>
+                                            <% } %>
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- boxi1 끝 -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ----------------------------- 연관키워드 끝 ----------------------------- -->
+
+
+        <!-- 맨 마지막 푸터 -->
+        <footer>
+            <div class="footertext">
+                <div class="logo_logo">
+                    <img src="/assets/logo2.png" class="logo_img" alt="">
+                    <sapn id="flogo">Toprospect</sapn>
+                </div>
+                <div>
+                    컴퓨터공학과<br>
+                    20131692 문승명<br>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- 메인 틀 끝 -->
+
+
+    <!-- ----------------------------- 메인화면 끝 ----------------------------- -->
+
+
+    <!-- 로그인 회원가입 모달창 기능 구현 -->
+    <script>
+        // 로그인 / 회원가입 창 띄워주는 스크립트
+        function show() {
+            document.querySelector(".background").className = "background show";
+        }
+        // 로그인 / 회원가입 창을 취소를 눌러 끄는 스크립트
+        function close() {
+            document.querySelector(".background").className = "background";
+        }
+        // 클릭시 일어남
+        document.querySelector("#show").addEventListener("click", show);
+        document.querySelector("#close").addEventListener("click", close);
+    </script>
+
+
+    <!-- 채팅 모달창 기능 구현 -->
+    <script>
+        // 채팅모달창 켜기
+        function show2() {
+            document.querySelector(".background2").className = "background2 show2";
+        }
+
+        // 채팅모달창 끄기
+        function close2() {
+            document.querySelector(".background2").className = "background2";
+        }
+
+        // 클릭시 일어남
+        document.querySelector("#show2").addEventListener("click", show2);
+        document.querySelector("#close2").addEventListener("click", close2);
+    </script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <!-- 적용된 스와이퍼 옵션 -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            slidesPerView: 3,
+            spaceBetween: 10,
+            navigation: { // 네비게이션 설정
+                nextEl: '.swiper-button-next', // 다음 버튼 클래스명
+                prevEl: '.swiper-button-prev', // 이번 버튼 클래스명
+            },
+        });
+    </script>
+
+
+    <!-- 선거 포스터 이미지 클릭 시 검색 이벤트 -->
+    <script>
+        document.querySelectorAll('.mySwiper_slid img').forEach(function (img) {
+            img.addEventListener('click', function () {
+                var name = this.alt;
+                document.getElementById('search').value = name;
+                document.getElementById('span_btn').click();
+            });
+        });
+    </script>
+
+
+    <!-- 채팅 글자수 제한 jsp -->
+    <script>
+        var textarea = document.getElementById("myTextarea");
+        textarea.addEventListener("input", function () {
+            if (this.value.length > this.maxLength) {
+                this.value = this.value.slice(0, this.maxLength);
+            }
+        });
+    </script>
+
+
+    <!-- jQuery 라이브러리를 웹페이지에 추가하는 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <!-- 페이지 탑 버튼 -->
+    <script>
+        $(document).ready(function () {
+            $("#btn_top").hide();
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 500) {
+                    $("#btn_top").fadeIn();
+                } else {
+                    $("#btn_top").fadeOut();
+                }
+            });
+        });
+
+        $("#btn_top").click(function () {
+            $('html,body').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        })
+    </script>
+
+
+    <!-- 채팅 기능 구현 하는 스크립트 -->
+    <script>
+        $(document).ready(function () {
+            getChatData();
+            setInterval(getChatData, 2000); // 0.5초마다 채팅 업데이트
+        });
+
+        // 시간 데이터를 변환하는 함수입니다.
+        function convertDate(date) {
+            const now = new Date();
+            const diff = now.getTime() - new Date(date).getTime();
+            const second = 1000;
+            const minute = second * 60;
+            const hour = minute * 60;
+            const day = hour * 24;
+
+            if (diff < second) {
+                return "방금 전";
+            } else if (diff < minute) {
+                const seconds = Math.floor(diff / second);
+                return "방금 전";
+            } else if (diff < hour) {
+                const minutes = Math.floor(diff / minute);
+                return `${minutes}분 전`;
+            } else if (diff < day) {
+                const hours = Math.floor(diff / hour);
+                return `${hours}시간 전`;
+            } else {
+                const days = Math.floor(diff / day);
+                return `${days}일 전`;
+            }
+        }
+
+        // 채팅 데이터를 가져오는 함수입니다.
+        function getChatData() {
+            $.ajax({
+                url: '/chat',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    var chatDiv = $('.chat-list');
+                    chatDiv.empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var chatContent = '';
+                        var chatDate = convertDate(data[i].indate);
+                        // 내 입력창 오른쪽 출력
+                        if (data[i].memNick === '<%= memNick %>') {
+                            chatContent = '<div class="chat-nick">' + data[i].memNick + '</div>' + '<div class="chat-content">' + data[i].content + '</div>';
+                            chatDiv.append('<li class="chat-right">' + chatContent + '<span class="chat-time">' + chatDate + '</span></li>');
+                            // 유저들 입력창 왼쪽 출력
+                        } else {
+                            chatContent = '<div class="chat-nick">' + data[i].memNick + '</div>' + '<div class="chat-content">' + data[i].content + '</div>';
+                            chatDiv.append('<li class="chat-left">' + chatContent + '<span class="chat-time">' + chatDate + '</span></li>');
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        // 채팅 전송 버튼 클릭 시
+        $('#chat_btn').click(function () {
+            // Ajax 요청을 보내어 데이터를 받아옵니다.
+            $.ajax({
+                url: '/chat',
+                type: 'POST',
+                data: $('#chat-form').serialize(), // 폼 요소들을 명시적으로 지정합니다.
+                dataType: 'json',
+                success: function (data) {
+                    var chatDiv = $('.chat-list');
+                    var chatContent = data[0].memNick + data[0].content + '<br>';
+                    chatDiv.append(chatContent);
+                    $('#myTextarea').val(''); // 입력창 초기화
+                    getChatData();
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        // 폼 제출시 서버에 메세지를 전송하고, 채팅 데이터를 가져옵니다.
+        $('#chat-form').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/chat',
+                type: 'POST',
+                data: { message: $('#chat-input').val() },
+                success: function (data) {
+                    getChatData();
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    </script>
+
+
+    <!-- 채팅 enter 클릭 시 입력하기 -->
+    <script>
+        $('#myTextarea').on('keydown', function (e) {
+            if (e.keyCode == 13 && !e.shiftKey) {
+                e.preventDefault();
+                $('#chat_btn').click();
+            }
+        });
+    </script>
+
+
+    <!-- 채팅창 스크롤 하는 기능 -->
+    <script>
+        const chatContainer = document.querySelector('.chat');
+        const chatInput = document.querySelector('#myTextarea');
+
+        // 스크롤이 가장 위쪽인지 확인하는 함수
+        function isScrollAtTop() {
+            return chatContainer.scrollTop === 0;
+        }
+
+        // 스크롤을 가장 위쪽으로 올리는 함수
+        function scrollToTop() {
+            chatContainer.scrollTop = 0;
+        }
+
+        // 스크롤을 가장 아래쪽으로 내리는 함수
+        function scrollToBottom() {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // 새로운 채팅 메시지 입력 시 자동으로 스크롤을 아래로 내리는 함수
+        function scrollToBottomIfAtBottom() {
+            if (isScrollAtBottom()) {
+                scrollToBottom();
+            }
+        }
+
+        // 채팅 입력 이벤트에 스크롤 내리기 함수 연결
+        chatInput.addEventListener('input', () => {
+            scrollToBottomIfAtBottom();
+        });
+
+        // 채팅 메시지가 추가될 때 자동으로 스크롤을 아래로 내리는 함수
+        function onNewChatAdded() {
+            scrollToBottomIfAtBottom();
+        }
+    </script>
+
+
+    <!-- 검색창 값없이 검색시 띄우는 알림창 -->
+    <script>
+        function validateSearch() {
+            const searchKeyword = document.getElementById('search').value.trim();
+            if (!searchKeyword) {
+                alert('검색어를 입력해주세요.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+
+    <!-- 적용된 스와이퍼 옵션 -->
+    <script>
+        // Swiper 컨테이너 요소 선택
+        var swiperContainer = document.querySelector(".mySwiper");
+
+        // Swiper 인스턴스 생성
+        var swiper = new Swiper(swiperContainer, {
+        autoplay: {
+            delay: 2000, // 슬라이드 간의 간격
+            disableOnInteraction: true, // 스와이프 이벤트 후 자동 슬라이드 동작 여부
+        },
+        loop: true, // 무한 슬라이드
+        slidesPerView: 3, // 슬라이드 한 화면에 보이는 개수
+        spaceBetween: 10, // 슬라이드 간의 간격
+        navigation: {
+            nextEl: ".swiper-button-next", // 다음 버튼 클래스명
+            prevEl: ".swiper-button-prev", // 이전 버튼 클래스명
+        },
+        });
+
+        // Swiper 컨테이너 요소에 이벤트 핸들러 등록
+        swiperContainer.addEventListener("mouseenter", function() {
+        swiper.autoplay.stop(); // autoplay 중지
+        });
+
+        swiperContainer.addEventListener("mouseleave", function() {
+        swiper.autoplay.start(); // autoplay 시작
+        });
+    </script>
+
+
+    <!-- 연관검색어 -->
+    <script>
+        fetch('/csvData')
+            .then(response => response.json())
+            .then(data => {
+                // '.boxi1' 클래스를 가진 요소들을 모두 가져온다.
+                const boxes = document.querySelectorAll('.boxi1');
+                // 받아온 데이터 중 첫 10개의 리스트를 순회하며 처리한다.
+                data.slice(0, 10).forEach((wordList, index) => {
+                    // 각 요소에 데이터를 입력한다.
+                    const h2 = boxes[index].querySelector('h2');
+                    const keywords = boxes[index].querySelectorAll('.swiper-slide.slide2');
+                    keywords.forEach((keyword, i) => {
+                        keyword.innerText = wordList.words[i];
+                        // 연관키워드 중 하나 클릭 시 후보자 + 키워드를 구글에 입력한다.
+                        keyword.addEventListener('click', () => {
+                            const query = encodeURIComponent(h2.textContent + ' ' + keyword.textContent);
+                            Swal.fire({
+                                icon: 'question',
+                                text: `${h2.textContent} + ${keyword.textContent} 로 검색을 하시겠습니까?`,
+                                showCancelButton: true,
+                                confirmButtonText: '검색',
+                                cancelButtonText: '취소'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.open(`https://www.google.com/search?q=${query}`, '_blank');
+                                }
+                            });
+                        });
+                    });
+                });
+            })
+            .catch(error => console.log(error));
+    </script>
+
+
+    <!-- 스윗 얼럿 -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+    <!-- 비밀번호 일치 x 알림창 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form[action='/register']");
+            form.addEventListener("submit", function (event) {
+                const pass = form.querySelector("input[name='pass']").value;
+                const confirmPass = form.querySelector("input[name='confirm-pass']").value;
+                if (pass !== confirmPass) {
+                    event.preventDefault(); // prevent form submission
+                    Swal.fire({
+                        icon: 'error',
+                        title: '비밀번호 오류',
+                        text: '비밀번호가 일치하지 않습니다.',
+                    });
+                }
+            });
+        });
+    </script>
+
+
+    <!-- 중복된 아이디 -->
+    <script>
+        $(document).ready(function () {
+            // input 값이 변경되면
+            $("#user2").blur("input", function () {
+
+                if (!$("#user2").val()) {
+                    return;
+                }
+                // AJAX 요청 보내기
+                $.ajax({
+                    url: "/checkid",  // 요청 보낼 주소
+                    type: "POST",  // 요청 방식
+                    data: {  // 전달할 데이터
+                        user: $("#user2").val()
+                    },
+                    success: function (response) {
+                        // 요청이 성공하면 실행될 콜백 함수
+                        if (response === "available") {
+                            Swal.fire({
+                                icon: 'success',
+                                text: '사용 가능한 아이디입니다!'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                text: '이미 사용 중인 아이디입니다.'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <!-- 구글 이동 및 빈값 검색시 알림창 코드 -->
+    <script>
+        $(document).ready(function () {
+            $('#sform').submit(function (event) {
+                const searchKeyword = $('#search').val();
+                const keywords = ['문재인', '윤석열', '심상정', '홍준표', '안철수', '이재명'];
+
+                // 검색어가 keywords 배열에 포함되어 있지 않은 경우, SweetAlert2로 알림창을 띄웁니다.
+                if ($('#search').val().trim() === '') {
+                    Swal.fire({
+                        text: '검색어를 입력해주세요',
+                        icon: 'warning',
+                        confirmButtonText: '확인'
+                    });
+                } else if (!keywords.includes(searchKeyword)) {
+                    event.preventDefault(); // 기본 동작인 검색 요청을 취소합니다.
+                    Swal.fire({
+                        icon: 'warning',
+                        text: `${searchKeyword}은 검색결과를 제공하지 않습니다.`,
+                        showCancelButton: true,
+                        confirmButtonText: '구글로 이동',
+                        cancelButtonText: '취소',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = `https://www.google.com/search?q=${searchKeyword}`;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+
+    <!-- 로그인 성공 및 아이디 비밀번호 불일치 알림창 -->
+    <script>
+        $(document).ready(function () {
+            $('#lform').submit(function (event) {
+                event.preventDefault();
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/login',
+                    data: formData,
+                    success: function (response) {
+                        if (response.success) {
+                            // 로그인 성공
+                            Swal.fire({
+                                icon: 'success',
+                                text: response.message,
+                                confirmButtonText: '확인'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '/';
+                                }
+                            });
+                        } else {
+                            // 로그인 실패
+                            Swal.fire({
+                                icon: 'error',
+                                text: response.message,
+                                confirmButtonText: '확인'
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <!-- 회원가입 성공 및 실패 -->
+    <script>
+        $(document).ready(function () {
+            $('#rform').submit(function (event) {
+                event.preventDefault();
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/register',
+                    data: formData,
+                    success: function (response) {
+                        if (response.success) {
+                            // 회원가입 성공
+                            Swal.fire({
+                                icon: 'success',
+                                text: response.message,
+                                confirmButtonText: '확인'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '/';
+                                }
+                            });
+                        } else {
+                            // 회원가입 실패
+                            Swal.fire({
+                                icon: 'error',
+                                text: response.message,
+                                confirmButtonText: '확인'
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <!-- 연관검색어 스와이퍼 -->
+    <script>
+        // swiperOptions 변수에 스와이퍼에 대한 옵션들을 객체로 정의한다
+        const swiperOptions = {
+            direction: "vertical", // 스와이퍼 방향 설정 (세로)
+            autoplay: { // 자동 슬라이드 설정
+                delay: 1000, // 슬라이드 딜레이 시간 (3초)
+                disableOnInteraction: false, // 사용자가 슬라이드에 상호작용을 할 경우 자동 슬라이드를 일시정지하지 않음
+            },
+            loop: true, // 슬라이드 루프 설정
+            pagination: { // 페이지네이션 설정
+                el: ".swiper-pagination", // 페이지네이션 요소 위치 설정
+                type: "bullets", // 페이지네이션 타입 설정
+                clickable: true, // 페이지네이션 클릭 가능 여부 설정
+            },
+        };
+
+        // swiperContainers 변수에 각 스와이퍼 요소들을 담는다
+        const swiperContainers = [
+            ".mySwiper1",
+            ".mySwiper2",
+            ".mySwiper3",
+            ".mySwiper4",
+            ".mySwiper5",
+            ".mySwiper6",
+        ];
+
+        // map() 메소드를 이용해 각 swiperContainer 요소들에 대해 Swiper 인스턴스를 생성하고 swipers 배열에 할당한다
+        const swipers = swiperContainers.map(container => new Swiper(container, swiperOptions));
+    </script>
+
+</body>
+
+</html>

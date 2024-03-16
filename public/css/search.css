@@ -1,0 +1,707 @@
+/* 전체 적용 */
+
+/* 전체 페이지 크기(최소) */
+.mainpage {
+  overflow: hidden;
+  min-width: 1280px;
+}
+
+
+
+
+/* 폰트 */
+@font-face {
+  font-family: 'NEXON Lv2 Gothic';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+/* 2023.03.16 (지마켓 폰트) */
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KyoboHandwriting2021sjy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KyoboHandwriting2021sjy.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 2023.03.18 타이틀 2 */
+@font-face {
+  font-family: 'twayair';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+* {
+  font-family: 'NEXON Lv2 Gothic';
+  /* 속성을 하나씩 없애준다 */
+  list-style: none;
+  /* list-style: none; 목록에 점 없애주는 기능*/
+  text-decoration: none;
+  border-collapse: collapse;
+  /* border-collapse: collapse; 테이블 다 붙여주는 기능*/
+  margin: 0px;
+  padding: 0px;
+  color: black;
+
+
+
+
+}
+
+/* 2023.03.15 */
+.intro_bg2 {
+  background:  linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url("/assets/back.jpg");
+  position: relative;
+  width: 100%;
+  height: 450px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* 메인 상단 헤더 */
+.header {
+  display: flex;
+  /* 플렉스를 주면 블록태그들을 한 줄에 균일하게 줄 수 있다. 자식 태그만 정리한 것
+  (div.searchAra, ul.nav만)*/
+  width: 1280px;
+  margin: auto;
+  /* 크기는 이미지 사이즈 보고 확인 */
+  height: 86px;
+}
+
+/* 메인 상단 헤더 글씨 파트*/
+.nav {
+  display: flex;
+  /* 끝에 붙여줄 거라서 end*/
+  /* justify-content: flex-end; */
+  /* 위에 너무 붙어있어서 맞춰줌 */
+  line-height: 86px;
+  /* 알아서 계산해준다. */
+  width: calc(1280px - 300px);
+  color: #fff;
+}
+
+/* 메인 상단 헤더 글씨 파트 왼쪽 여백*/
+.nav>li {
+  margin-left: 20px;
+}
+
+/* 메인 상단 Toprospect right 마진
+.nav>li>a#logo {
+  text-align: left;
+  margin-right: 850px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 25px;
+} */
+
+#logo {
+  text-align: left;
+  margin-right: 960px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 25px;
+  color: white;
+  }
+
+/* 2023.03.18 로고와 로고글씨를 감싸고 있는 div (추가) */
+.logo_logo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* 메인 상단 헤더 글씨 색 지정 */
+.nav>li>a {
+  color: #fff;
+}
+
+/* -1) 헤더 끝 */
+
+
+/* 2) 버튼 */
+
+/* 버튼 */
+button {
+  display: inline-block;
+  border: 2px solid #212529;
+  background: #212529;
+  border-radius: 25px;
+  padding: 3px 12px 5px 12px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  -webkit-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+}
+
+
+/* 버튼 위에 마우스 올렸을 때 */
+button:hover {
+  color: #212529;
+  background: #fff;
+  border: 2px solid #212529;
+}
+
+button:active {
+  box-shadow: none;
+}
+
+/* 검색영역의 버튼 */
+
+#span_btn{
+  
+  display: inline-block;
+  border: 2px solid #fff;
+  background: #fff;
+  border-radius: 25px;
+  padding: 3px 12px 5px 12px;
+  color: #212529;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  -webkit-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+  font-family: 'GmarketSansMedium';
+}
+
+#span_btn:hover{
+  font-family: 'GmarketSansMedium';
+  color: #fff;
+  background: #212529;
+  border: 2px solid #fff;
+}
+
+
+/* 닫기 버튼 */
+#close2{
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+/* -2) 버튼 끝 */
+
+/* 3) 검색 파트 */
+
+/* new! 검색영역의 버튼 ~ hover */
+
+#span_btn{
+margin-left: 5px;
+display: inline-block;
+border: 2px solid #fff;
+background: #fff;
+border-radius: 3px;
+padding: 5px;
+color: #212529;
+font-size: 16px;
+font-weight: bold;
+letter-spacing: 0px;
+-webkit-transition: all 0.1s ease-out;
+transition: all 0.1s ease-out;
+}    
+  
+#span_btn:hover{
+color: #fff;
+background: #212529;
+border: 2px solid #fff;
+}
+
+/* 2023.03.16 (click_btn) */
+
+.click_btn:hover{
+  background-color: rgba(0, 0, 0, 0.1);
+  font-family: 'GmarketSansMedium';
+  font-weight: bold;
+}
+.click_btn{
+  font-family: 'GmarketSansMedium';
+}
+
+
+/* 검색하는 text 공간 */
+/* new! search 입력크기 변경 */
+
+.block{
+  width: 100%;
+  height: 100px;
+}
+
+
+#search{
+  border: none; 
+  width: 590px; 
+  height: 50px; 
+  background-color: rgba(0,0,0,0.0); 
+  color: black; 
+  padding-left: 10px;
+}
+
+/* 2023.03.15 */
+#search:focus{
+  outline: none;
+}
+
+
+/* search form 크기 추가 */
+#searchform{
+width: 100%;
+}
+
+/* new! search를 감싼 div 추가(search에만)/크기 변경 */
+.searchArea2{
+  width: 650px;
+  height: 50px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 5px; 
+  margin: auto;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+}
+
+.name{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+/* 4) 채팅창 */
+#title h1{
+  color: white;
+}
+
+
+/* -4) 채팅창 끝 */
+
+
+
+/* 5) 본문 */
+
+/* 검색 후 본문의 크기 */
+.main_text1 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* 검색후 본문의 검색 대상자 글씨 */
+.main_text1>h1 {
+  padding-top: 90px;
+  text-align: center;
+}
+
+/* 본문 내부 한 단락의 전체 크기(ex tf-idf / 이슈성 ...) */
+.service {
+  position: relative;
+  width: 1280px;
+  margin: 49px auto;
+  height: 550px;
+  justify-content: space-between;
+  background-color: #fff;
+}
+
+
+/* 본문 내부 한 단락의 전체 크기(ex tf-idf / 이슈성 ...)  */
+.service3 {
+  position: relative;
+  width: 1280px;
+  margin: 49px auto;
+  height: 500px;
+  justify-content: space-between;
+  background-color: #fff;
+}
+
+
+.service_1 {
+  width: 1280px;
+  height: 427px;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+
+.tooltip {
+  margin-left: 5px;
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+
+.tooltip .tooltip-content {
+ 
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  padding: 10px;
+  background-color: lightgray;
+  color: #fff;
+  width: 250px;
+  text-align: justify;
+  border-radius: 6px;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.tooltip:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ?로 만든 화면에 보이는 (마우스를 올려야하는 부분) */
+.tooltip span {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+/* ?에 마우스를 올릴시 */
+.tooltip:hover span {
+  background-color: #ddd;
+}
+
+/* ?에 마우스를 올릴시 */
+.tooltip:hover .tooltip-content {
+  display: block;
+}
+
+
+
+/* 툴팁 세부 */
+/* tooltip-short */
+.tooltip-short{
+  font-size: 13px;
+  font-weight: bold;
+  font-family: 'GmarketSansMedium';
+}
+
+
+/* tooltip-long */
+.tooltip-long{
+  display: block;
+  margin: 5px;
+  font-family: 'KyoboHandwriting2021sjy';
+  font-weight: bold;
+}
+
+
+/* 중간선 감싼 div */
+.center{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;         
+}
+
+/* 중간선 */
+
+.center hr{
+  opacity: 30%;
+  width: 65%;
+}
+
+/* 오후 3시 42분 컨테이너 , box 7,box8 */
+/* box를 감싼 전체 컨테이너 */
+
+.container2 {
+  display: flex;
+  width: 1280px;
+  height: 500px;
+  margin: auto;
+}
+
+/* 전체 box 클래스의 설정 */
+.box {
+  border: 1px solid whtie;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+/* box클래스 내부에 존재하는 세부 박스들의 id */
+#box1 {
+  flex-grow: 2;
+  background-color: #fff;
+  width: 200px;
+  height: 100%;
+  border: solid 3px;
+  border-color: white;
+
+}
+
+#box2 {
+  flex-grow: 1;
+  background-color: #fff;
+  width: 100px;
+  height: 100%;
+  border: solid 3px;
+  border-color: white;
+}
+
+#box3 {
+  flex-grow: 1;
+  background-color: #fff;
+  width: 100px;
+  height: 100%;
+  border: solid 3px;
+  border-color: white;
+}
+
+#box4 {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+
+}
+
+#box5 {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  background-size: cover  ;
+}
+
+#box6 {
+  flex-grow: 2;
+  width: 300px;
+  height: 100%;
+  border: solid 3px;
+  border-color: white;
+}
+
+#box7 {
+  flex-grow: 1;
+  width: 100px;
+  height: 100%;
+  border: solid 3px;
+  border-color: white;
+}
+
+#word {
+  margin-top: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+#word img {
+  margin-top: 10px;
+  width: 100%;
+  height: auto;
+  /* 세로 비율은 자동으로 조정되도록 설정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  animation: fadein 5s ease 3s;
+  -webkit-animation: fadein 3s; /* Safari and Chrome */
+  
+}
+
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+@-webkit-keyframes fadein { /* Safari and Chrome */
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+
+
+/* 박스들 내부 위쪽에 해당하는 헤더 */
+.title2 {
+  background-color: #212529;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 박스들 내부 위쪽에 해당하는 헤더의 글씨 */
+.t_title2 {
+  color: #ddd;
+  margin-left: 10px;
+  font-family: 'GmarketSansMedium';
+}
+
+/* 중간에 div에 글씨가 들어가는 부분 */
+.mainContents,
+.mainCon{
+  height: 100%;
+}
+
+
+/* -5) 본문 끝 */
+
+
+
+
+/* 6) 뷰탭 */
+/* 뷰탭 메인 컨텐츠의 전체 크기 */
+.Smain {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  height: calc(100% - 40px);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* table의 윗부분의 크기 */
+.Vtoptable {
+  width: 100%;
+  height: 100%;
+}
+
+/* table의 밑부분의 크기 */
+.Vbtoomtable {
+  height: calc(100% - 31px);
+}
+
+/* table */
+.table {
+  width: 100%; /* 전체 너비 100% 설정 */
+  border-collapse: collapse; /* 셀 경계선 합치기 */
+}
+
+/* table의 th, td */
+.table th,
+.table td {
+  padding: 10px; /* 셀 안쪽 패딩 설정 */
+  text-align: center; /* 가운데 정렬 */
+}
+
+/* table의 가장 위 카테고리 */
+.table th {
+  font-family: 'GmarketSansMedium';
+  font-weight: bold; /* 머리글 굵게 설정 */
+  background-color: #f2f2f2; /* 배경색 설정 */
+}
+
+/* 테이블의 열의 간격을 조정함 */
+.table td:first-child,
+.table th:first-child {
+  width: 5%; /* 첫번째 열 너비 5% 설정 */
+}
+
+.table td:nth-child(2),
+.table th:nth-child(2) {
+  width: 10%; /* 두번째 열 너비 10% 설정 */
+}
+
+.table td:nth-child(3),
+.table th:nth-child(3) {
+  width: 20%; /* 세번째 열 너비 20% 설정 */
+}
+
+/* 나머지 열들의 너비는 1:1:1 비율로 설정 */
+.table td:nth-child(4),
+.table th:nth-child(4),
+.table td:nth-child(5),
+.table th:nth-child(5) {
+  width: calc((100% - 5% - 10% - 20%) / 3);
+}
+
+
+
+/* 차트 */
+
+/* 바차트 마진 */
+#myChart{
+  margin-top: 25px;
+  padding-right: 25px;
+  background-color: white;
+  width: 100%;
+  height: 400px;
+}
+
+#myChart2{
+  margin-top: 25px;
+  padding-right: 25px;
+  background-color: white;
+  width: 100%;
+  height: 400px;
+}
+
+
+/* 도넛차트 마진 */
+.myChart{
+  margin-top: 25px;
+}
+
+
+/* 푸터영역 */
+/* 푸터 */
+footer{
+  display: flex;
+  background: #1f1f1f;
+  padding: 30px;
+  white-space: nowrap;
+}
+
+/* 푸터 내부 div */
+footer div{
+margin-right: 100px;
+}
+
+/* 푸터 내부 텍스트 크기 */
+.footertext{
+height: 100%;
+width: 1280px;
+margin: 0px auto;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+}
+
+/* 푸터 내부의 div의 글씨색 */
+.footertext div{
+  color: white;
+}
+
+/* 푸터 내부의 id #flogo의 글씨색 */
+.footertext #flogo{
+  color: white;
+}

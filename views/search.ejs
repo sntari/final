@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <!-- search css -->
+    <link rel="stylesheet" href="/css/search.css">
+    <!-- 모달 css -->
+    <link rel="stylesheet" href="/css/modal.css">
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="/css/swiper-bundle.css" />
+    <link rel="stylesheet" href="/css/swiper.css">
+
+    <!-- 폰트 설정-->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!-- 로고 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+
+    <!-- 스윗 얼럿 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+
+    <!-- 차트.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- 홈페이지 상단로고 -->
+    <link href="/assets/logo.png" rel="shortcut icon" type="image/x-icon">
+
+    <!-- 감정분석 키워드 차트 -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/packedbubble.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap">
+
+    <!-- ECharts 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.2.2/echarts.min.js"></script>
+
+</head>
+
+<body> <!-- 바디태그 시작 -->
+    <div class="mainpage">
+        <div class="background2"> <!-- 백그라운드 2 시작 -->
+            <div class="window2"> <!-- window2 시작 -->
+                <div class="popup_2"> <!-- popup2 시작 -->
+                    <button id="close2">x</button> <!-- 닫기 버튼 -->
+                    <div id="title">
+                        <h1>CHAT</h1>
+                    </div>
+
+                    <!-- 채팅 출력 -->
+                    <div class="chat">
+                        <ul class="chat-list"></ul>
+                    </div>
+
+                    <!-- 채팅 입력 / 전송 -->
+                    <form id="chat-form" action="/chat" method="post">
+                        <div class="input-div">
+                            <div class="message">
+                                <textarea id="myTextarea" name="message" rows="3" maxlength="200"
+                                    placeholder="최대 200자까지 입력 가능합니다"></textarea>
+                                <button type="submit" id="chat_btn" class="submit">전송</button>
+                            </div>
+                        </div>
+                    </form>
+                </div> <!-- popup_2 끝 -->
+            </div> <!-- window2 끝 -->
+        </div> <!-- 백그라운드 2 끝 -->
+        <!-- 채팅 모달 팝업의 끝 -->
+
+        <!-- 상단 스크롤 TOP 버튼 -->
+        <div id="btn_top">
+            <img src="/assets/up-arrow.png" alt="top">
+        </div>
+
+        <!-- 메인 -->
+        <div class="wrap"> <!-- wrap 시작 -->
+            <div class="intro_bg2"> <!-- intro_bg 시작 -->
+                <div class="header"> <!-- header 시작 -->
+                    <ul class="nav"> <!-- nav 시작 -->
+                        <!-- 메인 상단 로고 -->
+                        <div class="logo_logo">
+                            <li><img src="/assets/logo2.png" class="logo_img" alt=""></li>
+                            <li>
+                                <a id="logo" href="/">Toprospect</a>
+                            </li>
+                        </div>
+                        <!-- 로그인을 해야 들어올 수 있어서 로그아웃만 -->
+                        <!-- 페이지 이동을 위해 home.html로 이동은 설정 해두었지만 logout하면 로그인 정보가 사라져서 자동으로 메인에 가야함 -->
+                        <li><a href="/logout" class="click_btn">LOGOUT</a></li>
+                        <!-- 게시글?채팅? 실시간으로 CHAT를 여는 부분 -->
+                        <li><a id="show2" class="click_btn">CHAT</a></li>
+                    </ul>
+                </div>
+
+                <div class="block"></div>
+
+                <!-- 검색 파트 시작 -->
+                <div class="searchArea2"> <!-- searchArea 시작 -->
+                    <form id="sform" action="/search" method="get"> <!-- 검색 폼 시작 -->
+                        <!-- 검색창 -->
+                        <input name="search" id="search" type="search" placeholder="Search">
+                        <!-- 검색 버튼 -->
+                        <button type="submit" id="span_btn" class="search">검색</button>
+                    </form> <!-- 검색 폼 끝 -->
+                </div> <!-- searchArea 끝 -->
+
+            </div> <!-- intro_bg 끝 -->
+
+
+            <!-- 검색 후 메인 컨텐츠를 보여줄 화면 -->
+
+            <div class="main_text1" id="link_main_text1"> <!-- main_text1 시작 -->
+                <h1>
+                    "<span class="name">
+                        <%= searchKeyword %>
+                    </span>" 님의 여론조사 결과를 기반으로 한 득표율은
+                    <% if(searchKeyword==='문재인' ) { %>
+                        <span class="middle" id="result">0</span>
+                        <script>
+                            var sss = <%= sss %>;
+                            var sum19 = <%= sum19 %>;
+                            var result = (((sss * 0.1570) / (sum19 * 0.1497)) * 100);
+                            var target = result.toFixed(2);
+                            var current = 0;
+
+                            function count() {
+                                if (current >= target) {
+                                    clearInterval(counter);
+                                } else {
+                                    current++;
+                                    document.getElementById("result").textContent = current + "%";
+                                }
+                            }
+
+                            var counter = setInterval(count, 2);
+                        </script>
+                        <% } else if(searchKeyword==='홍준표' ) { %>
+                            <span class="middle" id="result">0</span>
+                            <script>
+                                var sss = <%= sss %>;
+                                var sum19 = <%= sum19 %>;
+                                var result = (((sss * 0.1602) / (sum19 * 0.1497)) * 100);
+                                var target = result.toFixed(2);
+                                var current = 0;
+
+                                function count() {
+                                    if (current >= target) {
+                                        clearInterval(counter);
+                                    } else {
+                                        current++;
+                                        document.getElementById("result").textContent = current + "%";
+                                    }
+                                }
+
+                                var counter = setInterval(count, 2);
+                            </script>
+                            <% } else if(searchKeyword==='안철수' ) { %>
+                                <span class="middle" id="result">0</span>
+                                <script>
+                                    var sss = <%= sss %>;
+                                    var sum19 = <%= sum19 %>;
+                                    var result = (((sss * 0.1316) / (sum19 * 0.1497)) * 100);
+                                    var target = result.toFixed(2);
+                                    var current = 0;
+
+                                    function count() {
+                                        if (current >= target) {
+                                            clearInterval(counter);
+                                        } else {
+                                            current++;
+                                            document.getElementById("result").textContent = current + "%";
+                                        }
+                                    }
+
+                                    var counter = setInterval(count, 2);
+                                </script>
+                                <% } else if(searchKeyword==='윤석열' ) { %>
+                                    <span class="middle" id="result"></span>
+                                    <script>
+                                        var sss = <%= sss %>;
+                                        var sum20 = <%= sum20 %>;
+                                        var result = (((sss * 0.0855) / (sum20 * 0.0662)) * 100);
+                                        document.getElementById("result").textContent = result.toFixed(2) + '%';
+                                    </script>
+                                    <% } else if(searchKeyword==='이재명' ) { %>
+                                        <span class="middle" id="result"></span>
+                                        <script>
+                                            var sss = <%= sss %>;
+                                            var sum20 = <%= sum20 %>;
+                                            var result = (((sss * 0.0464) / (sum20 * 0.0662)) * 100);
+                                            document.getElementById("result").textContent = result.toFixed(2) + '%';
+                                        </script>
+                                        <% } else { %>
+                                            <span class="middle" id="result"></span>
+                                            <script>
+                                                var sss = <%= sss %>;
+                                                var sum20 = <%= sum20 %>;
+                                                var result = (((sss * 0.068) / (sum20 * 0.0662)) * 100);
+                                                document.getElementById("result").textContent = result.toFixed(2) + '%';
+                                            </script>
+                                            <% } %>
+                                                입니다.
+                </h1>
+                <!-- 1) 득표율 / 워드클라우드 시작 -->
+                <!-- 2023.03.14 (오전 10시 28분) 시작 -->
+                <!-- 1) TF-IDF 시작  -->
+                <div class="service"> <!-- service 시작 -->
+                    <div class="service_1"> <!-- service_1 시작 -->
+                        <div class="container"> <!-- container 시작 -->
+                            <div class="box" id="box6"> <!-- box1 시작 -->
+                                <div class="service_heder4"> <!-- 득표율 헤더 시작 -->
+                                    <div class="title2"> <!-- title2 시작 -->
+                                        <span class="t_title2">키워드 그래프</span>
+                                        <span class="tooltip">
+                                            <span class="modal-btn1">?</span>
+                                            <div id="modal1" class="modal">
+
+                                                <div class="modal-content">
+                                                    <div class="modal_header">
+                                                        <p class="modal_title">키워드 그래프</p>
+                                                        <span class="close3"
+                                                            style="margin-bottom: 10px;margin-top: 0;">&times;</span>
+                                                    </div>
+                                                    <div class="modal-content2">
+                                                        <p>
+                                                            후보자를 검색했을 때 어떤 단어가 특정 문서 내에서 얼마나 중요한 것인지를 나타냅니다.<br><br>
+                                                            다른 문서에는 많지 않으면서 해당 문서에서만 자주 등장하는 단어에 중요도를 더 부여하는 방식으로 만들어진
+                                                            그래프입니다.<br><br>
+                                                            마우스를 그래프에 대면 해당 단어별 중요도 지수가 표현됩니다.
+                                                        </p>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </span>
+                                    </div> <!-- title2 끝 -->
+                                </div> <!-- TF-IDF 헤더 끝 -->
+                                <div> <!-- TF-IDF 메인컨텐츠 시작 -->
+                                    <div>
+                                        <div>
+                                            <canvas id="myChart2"></canvas>
+                                        </div>
+                                    </div>
+                                </div> <!-- TF-IDF 메인컨텐츠 끝 -->
+                            </div> <!-- bOX1 끝 -->
+                            <!-- 2023.03.14 (오전 10시 28분) 끝(-> canvas 부분에 margin-top 추가) -->
+
+
+                            <div class="box" id="box7"> <!-- box2 시작 -->
+                                <div class="service_heder4"> <!-- 워드클라우드 헤더 시작 -->
+                                    <div class="title2"> <!-- title2 시작 -->
+                                        <span class="t_title2">워드클라우드</span>
+                                        <span class="tooltip">
+                                            <span class="modal-btn2">?</span>
+                                            <div id="modal2" class="modal">
+                                                <div class="modal-content">
+                                                    <div class="modal_header">
+                                                        <p class="modal_title">워드클라우드</p>
+                                                        <span class="close3"
+                                                            style="margin-bottom: 10px;margin-top: 0;">&times;</span>
+                                                    </div>
+                                                    <div class="modal-content2">
+                                                        <p>
+                                                            문서의 주요 단어를 한눈에 파악할 수 있도록 크기와 색을 이용해 시각적으로 돋보이게 하는
+                                                            방법입니다.<br><br>
+                                                            텍스트에서 자주 나오는 단어들을 크게 표시하고, 그렇지 않은 단어들은 작게 표시합니다.
+                                                        </p>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </span>
+                                    </div> <!-- title2 끝 -->
+                                </div> <!-- 워드클라우드 헤더 끝 -->
+
+                                <div> <!-- 워드클라우드 메인컨텐츠 시작 -->
+                                    <div>
+                                        <div id="word">
+                                            <img src="/assets/word/<%=searchKeyword%>.png" alt="워드클라우드">
+                                        </div>
+                                    </div>
+                                </div> <!-- 워드클라우드 메인컨텐츠 끝 -->
+                            </div> <!-- box2 끝 -->
+                        </div> <!-- container 끝 -->
+                    </div> <!-- service_1 끝 -->
+                </div> <!-- service 끝 -->
+                <!-- 1) 득표율 / 워드클라우드 완료 -->
+
+                >
+
+                <!-- 2) 감정분석 시작 -->
+                <div class="service"> <!-- service 시작 -->
+                    <div class="service_1"> <!-- service_1 시작 -->
+                        <div class="container"> <!-- 컨테이너 시작 -->
+                            <div class="box" id="box1"> <!-- box1 시작 -->
+                                <div class="service_header4"> <!-- 감정분석 헤더 시작 -->
+                                    <div class="title2"> <!-- title2 시작 -->
+                                        <span class="t_title2">감정분석</span>
+                                        <span class="tooltip">
+                                            <span class="modal-btn3">?</span>
+                                            <div id="modal3" class="modal">
+
+                                                <div class="modal-content">
+                                                    <div class="modal_header">
+                                                        <p class="modal_title">감정분석</p>
+                                                        <span class="close3"
+                                                            style="margin-bottom: 10px;margin-top: 0;">&times;</span>
+                                                    </div>
+                                                    <div class="modal-content2">
+                                                        <p>
+                                                            각 후보에 대한 감정분석 결과를 시각화하여 보여줍니다.<br><br>
+                                                            왼쪽의 버블 차트(bubble chart)는 해당 후보에 대한 긍정, 부정, 중립 키워드로 해당 감정에 높은
+                                                            연관성을 가진 상위 키워드 7가지 입니다.<br><br>
+                                                            오른쪽의 원형 차트(Pie chart)는 후보에 대한 각각의 긍정, 중립, 부정을 시각화로 표현하였습니다.
+                                                            각 후보에 대한 여론의 긍정과 부정을 한 눈에 알아볼 수 있습니다.
+                                                        </p>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>>
+                                        </span>
+                                    </div> <!-- title2 끝 -->
+                                </div> <!-- 감벙분석 헤더 끝 -->
+
+
+
+                                <div> <!-- 감정분석 차트 시작 -->
+                                    <div>
+                                        <!-- 차트들을 감싸는 div -->
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <figure class="highcharts-figure" style="width: 40%;">
+                                                <!-- 감정 키워드 차트 -->
+                                                <div id="container"></div>
+                                            </figure>
+                                            <!-- 감정 지수 차트 -->
+
+                                            <div id="sentimentPosChart" style="width: 19%;"></div>
+                                            <div id="sentimentNeuChart" style="width: 19%;"></div>
+                                            <div id="sentimentNegChart" style="width: 19%;"></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- 감정분석 차트 끝 -->
+
+                        </div> <!-- box1 끝 -->
+                    </div> <!-- container 끝 -->
+                </div> <!-- service_1 끝 -->
+            </div> <!-- service 끝 -->
+            <!-- 2) 감정분석 끝 -->
+            <div class="center">
+            </div>
+
+            <!-- 3) VIEWTAP 시작 -->
+            <div class="service3"> <!-- service3 시작 -->
+                <div class="service_heder4"> <!-- viewtab 헤더의 시작 -->
+                    <div class="title2"> <!-- title2 시작 -->
+                        <span class="t_title2">뷰탭</span>
+                        <span class="tooltip">
+                            <span class="modal-btn4">?</span>
+                            <div id="modal4" class="modal">
+
+                                <div class="modal-content">
+                                    <div class="modal_header">
+                                        <p class="modal_title">뷰탭</p>
+                                        <span class="close3" style="margin-bottom: 10px;margin-top: 0;">&times;</span>
+                                    </div>
+                                    <div class="modal-content2">
+                                        <p>
+                                            키워드 네이버 통합 검색 시 VIEW 탭의 첫 페이지에 노출 중인 콘텐츠들의 정보입니다.<br><br>
+                                            연관성이 높은 순서로 콘텐츠가 출력됩니다. 제목을 클릭하면 해당 게시글을 볼 수 있습니다.
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </span>
+                    </div> <!-- title2 끝 -->
+                </div> <!-- viewtab 헤더의 끝 -->
+
+
+                <div class="Smain"> <!-- 뷰탭 메인 컨텐츠 시작 -->
+                    <div class="Vtoptable">
+                        <div id="search-result-table">
+                            <!-- 검색 결과를 출력할 테이블을 생성하는 코드 -->
+                        </div>
+                    </div> <!-- 뷰탭 메인 테이블 끝 -->
+                </div> <!-- 뷰탭 메인 컨텐츠 끝 -->
+            </div> <!-- service3의 끝 -->
+
+
+            <!-- 3) viewtab 끝 -->
+            <div class="center">
+            </div>
+            <div class="service" style="height: 500px;">
+                <div class="container"> <!-- container 시작 -->
+                    <div class="box" id="box1"> <!-- box1 = (검색연령) 시작 -->
+                        <div class="service_heder4"> <!-- 검색 연령 헤더 시작 -->
+                            <div class="title2">
+                                <span class="t_title2">연령별</span>
+                                <span class="tooltip">
+                                    <span class="modal-btn5">?</span>
+                                    <div id="modal5" class="modal">
+
+                                        <div class="modal-content">
+                                            <div class="modal_header">
+                                                <p class="modal_title">연령별</p>
+                                                <span class="close3"
+                                                    style="margin-bottom: 10px;margin-top: 0;">&times;</span>
+                                            </div>
+                                            <div class="modal-content2">
+                                                <p>후보자의 연령별 검색비율입니다.</p>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- 검색 연령 헤더 끝 -->
+
+                        <div> <!-- 검색 연령 메인컨텐츠 시작 -->
+                            <div>
+                                <div>
+                                    <canvas id="myChart"></canvas>
+                                </div>
+                            </div>
+                        </div> <!-- 검색 연령 메인컨텐츠 끝 -->
+
+                    </div>
+
+
+                    <!-- box1 끝 -->
+                    <!-- box2 = (성별) 시작 -->
+                    <div class="box" id="box2">
+                        <div class="service_heder4"> <!-- 성별별 헤더 시작 -->
+                            <div class="title2">
+                                <span class="t_title2">성별별</span>
+                                <span class="tooltip">
+                                    <span class="modal-btn6">?</span>
+                                    <div id="modal6" class="modal">
+                                        <div class="modal-content">
+                                            <div class="modal_header">
+                                                <p class="modal_title">성별별</p>
+                                                <span class="close3"
+                                                    style="margin-bottom: 10px;margin-top: 0;">&times;</span>
+                                            </div>
+                                            <div class="modal-content2">
+                                                <p>후보자의 성별 검색 비율입니다</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div> <!-- 성별별 헤더 끝 -->
+
+                        <div> <!-- 성별별 메인컨텐츠 시작 -->
+                            <div>
+                                <div class="myChart">
+                                    <canvas id="myCharti2"></canvas>
+                                </div>
+                            </div>
+                        </div> <!-- 성별별 메인컨텐츠 끝 -->
+                    </div>
+                    <!-- box2 끝 -->
+                    <!-- box3 = (이슈성) 시작 -->
+                    <div class="box" id="box3">
+                        <div class="service_heder4"> <!-- 이슈성 헤더 시작-->
+                            <div class="title2">
+                                <span class="t_title2">이슈성</span>
+                                <span class="tooltip">
+                                    <span class="modal-btn7">?</span>
+
+                                    <div id="modal7" class="modal">
+
+                                        <div class="modal-content">
+                                            <div class="modal_header">
+                                                <p class="modal_title">이슈성</p>
+                                                <span class="close3"
+                                                    style="margin-bottom: 10px;margin-top: 0;">&times;</span>
+                                            </div>
+                                            <div class="modal-content2">
+                                                <p>전체 검색비 중 특정 후보자 검색 비율을 나타냅니다</p>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </span>
+                            </div>
+                        </div>
+                        <!-- 이슈성 헤더 끝 -->
+                        <div> <!-- 이슈성 메인컨텐츠 시작 -->
+                            <div>
+                                <div class="myChart">
+                                    <canvas id="myCharti3"></canvas>
+                                </div>
+                            </div>
+                        </div> <!-- 이슈성 메인컨텐츠 끝 -->
+                    </div>
+                    <!-- box3 끝 -->
+                </div>
+            </div>
+        </div> <!-- main_text1 끝 -->
+    </div> <!-- wrap 끝 -->
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="footertext">
+
+            <div class="logo_logo">
+                <img src="/assets/logo2.png" class="logo_img" alt="">
+                <sapn id="flogo">Toprospect</sapn>
+            </div>
+            <div>
+                컴퓨터공학과<br>
+                20131692 문승명<br>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <!-- ? 모달창 -->
+    <script>
+        // 모달 열기 버튼 클릭 시 모달 창을 보이게 함
+        for (let i = 1; i <= 7; i++) {
+            document.getElementsByClassName(`modal-btn${i}`)[0].onclick = function () {
+                openModal(i);
+            };
+        }
+        function openModal(modalNum) {
+            document.getElementById(`modal${modalNum}`).style.display = "block";
+            document.getElementsByTagName("body")[0].style.overflow = "hidden";
+            document.getElementsByTagName("body")[0].style.paddingRight = "16px";
+        }
+
+        // 모달 창에서 X 버튼을 클릭 시 모달 창을 닫음
+        let closeButtons = document.getElementsByClassName("close3");
+        for (let i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].onclick = function () {
+                document.getElementById(`modal${i + 1}`).style.display = "none";
+                document.getElementsByTagName("body")[0].style.overflow = "auto";
+                document.getElementsByTagName("body")[0].style.paddingRight = "0px";
+            };
+        }
+
+        // 모달 창 바깥쪽을 클릭 시 모달 창을 닫음
+        window.onclick = function (event) {
+            for (let i = 1; i <= 7; i++) {
+                const modal = document.getElementById(`modal${i}`);
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                    document.getElementsByTagName("body")[0].style.overflow = "auto";
+                    document.getElementsByTagName("body")[0].style.paddingRight = "0px";
+                }
+            }
+        }
+
+        // modal-content 클래스를 가진 요소를 변수 modalContent에 할당
+        var modalContent = document.getElementsByClassName("modal-content")[0];
+
+        // modal-content 요소를 클릭할 경우, 이벤트가 상위 요소로 전파되지 않도록 중지
+        modalContent.onclick = function (event) {
+            event.stopPropagation();
+        };
+    </script>
+
+
+    <!-- 키워드,워드클라우드 등등.. 설명문 -->
+    <script>
+        function toggleTooltip(index) {
+            var tooltip = document.getElementById(`tooltip-long-${index}`);
+            tooltip.style.display = tooltip.style.display === "none" ? "block" : "none";
+        }
+
+        for (var i = 1; i <= 7; i++) {
+            document.getElementById(`tooltip-short-${i}`).addEventListener("click", toggleTooltip.bind(null, i));
+        }
+    </script>
+
+
+    <!-- 페이지 탑 버튼 -->
+    <script>
+        $(document).ready(function () {
+            $("#btn_top").hide();
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 500) {
+                    $("#btn_top").fadeIn();
+                } else {
+                    $("#btn_top").fadeOut();
+                }
+            });
+        });
+
+        $("#btn_top").click(function () {
+            $('html,body').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        })
+    </script>
+
+
+    <!-- 키워드 그래프  -->
+    <script>
+        // 서버에서 데이터 가져오기
+        fetch('/csvData')
+            .then(res => res.json())
+            .then(data => {
+                // 키워드별 데이터 필터링
+                const filteredData = data.filter(d => '<%=searchKeyword%>'.includes(d.words[0]));
+                // 차트 데이터 생성
+                const chartData = {
+                    labels: filteredData[0].tfidf.map((_, i) => filteredData[0].words[i]),
+                    datasets: filteredData.map(d => ({
+                        label: d.words[0],
+                        backgroundColor: [
+                            '#D4F0F0',
+                            '#C6DBDA',
+                            '#8FCACA',
+                            '#CCE2CB',
+                            '#B6CFB6',
+                            '#AFC4E7',
+                            '#EEAFAF'
+                        ],
+                        data: d.tfidf.map(row => parseFloat(row[0]))
+                    }))
+                };
+                // 차트 생성
+                const ctx = document.getElementById('myChart2').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: chartData,
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                        }
+                    }
+                });
+            });
+
+    </script>
+
+
+    <!-- 감정 키워드 차트.highcharts의 팩버블 -->
+    <script>
+        fetch('/SentimentData')
+            .then(response => response.json())
+            .then(data => {
+                // highcharts 구현
+                // 검색 단어 가져오기
+                const filteredData = data.filter(d => '<%=searchKeyword%>'.includes(d.posWords[0]));
+                const createData = (tfidf, words) => tfidf.map((value, i) => ({
+                    name: words[i],
+                    value: parseFloat(value)
+                }));
+
+                const posData = createData(filteredData[0].posTfidf, filteredData[0].posWords);
+                const negData = createData(filteredData[0].negTfidf, filteredData[0].negWords);
+                const neuData = createData(filteredData[0].neuTfidf, filteredData[0].neuWords);
+
+                // 차트 시작
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'packedbubble',
+                        height: '100%'
+                    },
+                    title: { text: null },
+                    tooltip: {
+                        useHTML: true,
+                        pointFormat: '<b>키워드 : {point.name}</b><br>TF-IDF : {point.value}'
+                    },
+                    plotOptions: {
+                        packedbubble: {
+                            minSize: '30%',
+                            maxSize: '80%',
+                            zMin: 0,
+                            zMax: 800,
+                            layoutAlgorithm: {
+                                gravitationalConstant: 0.05,
+                                splitSeries: true,
+                                seriesInteraction: false,
+                                dragBetweenSeries: true,
+                                parentNodeLimit: true
+                            },
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.name}',
+                                style: {
+                                    color: 'black',
+                                    textOutline: 'none',
+                                    fontWeight: 'bold',
+                                    fontFamily: 'Noto Sans KR',
+                                    fontSize: '13'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        name: '긍정',
+                        color: '#3d89cc',
+                        data: posData.slice(0, 7).map((data, index) => ({
+                            name: data.name,
+                            value: parseFloat((data.value * (700 - 100 * index)).toFixed(2))
+                        }))
+                    }, {
+                        name: '부정',
+                        color: '#e8553f',
+                        data: negData.slice(0, 7).map((data, index) => ({
+                            name: data.name,
+                            value: parseFloat((data.value * (700 - 100 * index)).toFixed(2))
+                        }))
+                    }, {
+                        name: '중립',
+                        color: '#6eff90',
+                        data: neuData.slice(0, 7).map((data, index) => ({
+                            name: data.name,
+                            value: parseFloat((data.value * (700 - 100 * index)).toFixed(2))
+                        }))
+
+                    }]
+                });
+            })
+            .catch(error => console.log(error));
+    </script>
+
+
+    <!-- 감정 지수 차트.Echarts의 트랜스포머 도넛 차트 -->
+    <script>
+        // 사용자의 검색값을 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchKeyword = urlParams.get('search');
+
+        // 서버에서 감정 점수 데이터 가져오기
+        fetch(`/SentimentScore?search=${searchKeyword}`)
+            .then(response => response.json())
+            .then(data => {
+
+                // 총 감정지수 계산
+                const totalSentiment = data[0]['sumConfidencePos'] + data[0]['sumConfidenceNeg'] + data[0]['sumConfidenceNeu'];
+
+                // 차트 반지름 설정
+                const radius = ["30%", "80%"];
+
+                // 긍정 차트----------------------------------------------------------------------------------------------------------------------------------------------------
+
+                // 긍정차트 생성
+                var PosChart = echarts.init(document.getElementById("sentimentPosChart"));
+
+                // 긍정 옵션 빈상자
+                var option;
+                // 긍정차트 데이터 설정
+                const PosData = [
+                    { value: Math.round((data[0]['sumConfidencePos'] / totalSentiment) * 10000) / 100, name: ' 긍정 지수', itemStyle: { color: '#70BCE5' } },
+                    { value: Math.round((((data[0]['sumConfidenceNeu'] + data[0]['sumConfidenceNeg']) / totalSentiment) * 10000)) / 100, name: '그 외 지수', itemStyle: { color: '#808080' } }
+                ];
+                // 긍정차트 색상 설정
+                const PosdefaultPalette = [
+                    "#70BCE5",
+                    "#808080"
+                ];
+
+                // 긍정파이 차트 옵션 설정
+                const posOption = {
+                    title: {
+                        text: '긍정 감정 지수',
+                        left: 'center',
+                        top: 70,
+                        textStyle: {
+                            fontSize: 24, // set the font size to 24
+                            color: '#70BCE5',
+                            borderRadius: 10,
+                            borderColor: '#000000',
+                            borderWidth: 3
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                    },
+                    series: [
+                        {
+                            name: searchKeyword + ' 지수',
+                            type: "pie",
+                            id: "distribution",
+                            radius: radius,
+                            label: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: '20',
+                                    fontWeight: 'bold',
+                                },
+                            },
+                            itemStyle: {
+                                borderRadius: 10,
+                                borderColor: '#fff',
+                                borderWidth: 2,
+                            },
+                            labelLine: {
+                                show: true,
+                            },
+                            universalTransition: true,
+                            animationDurationUpdate: 1000,
+                            data: PosData
+
+                        }
+                    ]
+                };
+                // 긍정 차트 옵션 설정
+                const posparliamentOption = (function () {
+                    // 차트 데이터의 합 계산
+                    let sum = PosData.reduce(function (sum, cur) {
+                        return sum + cur.value;
+                    }, 0);
+                    // 각 데이터의 시작 각도 계산
+                    let angles = [];
+                    let startAngle = -Math.PI / 2;
+                    let curAngle = startAngle;
+                    PosData.forEach(function (item) {
+                        angles.push(curAngle);
+                        curAngle += (item.value / sum) * Math.PI * 2;
+                    });
+                    angles.push(startAngle + Math.PI * 2);
+
+                    // 긍정 차트 레이아웃 함수
+                    function parliamentLayout(startAngle, endAngle, totalAngle, r0, r1, size) {
+                        const rowsCount = Math.ceil((r1 - r0) / size);
+                        const points = [];
+                        let r = r0;
+                        for (let i = 0; i < rowsCount; i++) {
+                            const totalRingSeatsNumber = Math.round((totalAngle * r) / size);
+                            const newSize = (totalAngle * r) / totalRingSeatsNumber;
+                            for (
+                                let k = Math.floor((startAngle * r) / newSize) * newSize;
+                                k < Math.floor((endAngle * r) / newSize) * newSize - 1e-6;
+                                k += newSize
+                            ) {
+                                const angle = k / r;
+                                const x = Math.cos(angle) * r;
+                                const y = Math.sin(angle) * r;
+                                points.push([x, y]);
+                            }
+                            r += size;
+                        }
+                        return points;
+                    }
+
+                    // 긍정 차트 옵션 객체 반환
+                    return {
+                        series: {
+                            type: "custom",
+                            id: "distribution",
+                            data: PosData,
+                            coordinateSystem: undefined,
+                            universalTransition: true,
+                            animationDurationUpdate: 1000,
+                            renderItem: function (params, api) {
+                                var idx = params.dataIndex;
+                                var viewSize = Math.min(api.getWidth(), api.getHeight());
+                                var r0 = ((parseFloat(radius[0]) / 100) * viewSize) / 2;
+                                var r1 = ((parseFloat(radius[1]) / 100) * viewSize) / 2;
+                                var cx = api.getWidth() * 0.5;
+                                var cy = api.getHeight() * 0.5;
+                                var size = viewSize / 50;
+                                var points = parliamentLayout(
+                                    angles[idx],
+                                    angles[idx + 1],
+                                    Math.PI * 2,
+                                    r0,
+                                    r1,
+                                    size + 3
+                                );
+                                return {
+                                    type: "group",
+                                    children: points.map(function (pt) {
+                                        return {
+                                            type: "circle",
+                                            autoBatch: true,
+                                            shape: {
+                                                cx: cx + pt[0],
+                                                cy: cy + pt[1],
+                                                r: size / 2
+                                            },
+                                            style: {
+                                                fill: PosdefaultPalette[idx % PosdefaultPalette.length]
+                                            }
+                                        };
+                                    })
+                                };
+                            }
+                        }
+                    };
+                })();
+                // ---------------------------------------------------------------------------------------------------------------
+
+                // 중립 차트 생성
+                var NeuChart = echarts.init(document.getElementById("sentimentNeuChart"));
+
+                // 중립차트 색상 설정
+                const NeudefaultPalette = [
+                    "#A1FFC3",
+                    "#808080"
+                ];
+
+                // 중립 옵션 빈상자
+                var option1;
+
+                // 중립차트 데이터 설정
+                const NeuData = [
+                    { value: Math.round((data[0]['sumConfidenceNeu'] / totalSentiment) * 10000) / 100, name: ' 중립 지수', itemStyle: { color: '#A1FFC3' } },
+                    { value: Math.round((((data[0]['sumConfidencePos'] + data[0]['sumConfidenceNeg']) / totalSentiment) * 10000)) / 100, name: '그 외 지수', itemStyle: { color: '#808080' } }
+                ];
+                // 중립차트 옵션 설정
+                const NeuOption = {
+                    title: {
+                        text: '중립 감정 지수',
+                        left: 'center',
+                        top: 70,
+                        textStyle: {
+                            fontSize: 24, // set the font size to 24
+                            color: '#A1FFC3',
+                            borderRadius: 10,
+                            borderColor: '#000000',
+                            borderWidth: 3
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                    },
+                    series: [
+                        {
+                            name: searchKeyword + ' 지수',
+                            type: "pie",
+                            id: "distribution1",
+                            radius: radius,
+                            label: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: '20',
+                                    fontWeight: 'bold',
+                                },
+                            },
+                            itemStyle: {
+                                borderRadius: 10,
+                                borderColor: '#fff',
+                                borderWidth: 2,
+                            },
+                            labelLine: {
+                                show: true,
+                            },
+                            universalTransition: true,
+                            animationDurationUpdate: 1000,
+                            data: NeuData
+
+                        }
+                    ]
+                };
+                // 중립 차트 옵션 설정
+                const NeuparliamentOption = (function () {
+                    // 중립 차트 데이터의 합 계산
+                    let sum = NeuData.reduce(function (sum, cur) {
+                        return sum + cur.value;
+                    }, 0);
+                    // 각 데이터의 시작 각도 계산
+                    let angles = [];
+                    let startAngle = -Math.PI / 2;
+                    let curAngle = startAngle;
+                    NeuData.forEach(function (item) {
+                        angles.push(curAngle);
+                        curAngle += (item.value / sum) * Math.PI * 2;
+                    });
+                    angles.push(startAngle + Math.PI * 2);
+
+                    // 중립 차트 레이아웃 함수
+                    function parliamentLayout(startAngle, endAngle, totalAngle, r0, r1, size) {
+                        let rowsCount = Math.ceil((r1 - r0) / size);
+                        let points = [];
+                        let r = r0;
+                        for (let i = 0; i < rowsCount; i++) {
+                            let totalRingSeatsNumber = Math.round((totalAngle * r) / size);
+                            let newSize = (totalAngle * r) / totalRingSeatsNumber;
+                            for (
+                                let k = Math.floor((startAngle * r) / newSize) * newSize;
+                                k < Math.floor((endAngle * r) / newSize) * newSize - 1e-6;
+                                k += newSize
+                            ) {
+                                let angle = k / r;
+                                let x = Math.cos(angle) * r;
+                                let y = Math.sin(angle) * r;
+                                points.push([x, y]);
+                            }
+                            r += size;
+                        }
+                        return points;
+                    }
+
+                    // 중립 차트 옵션 객체 반환
+                    return {
+                        series: {
+                            type: "custom",
+                            id: "distribution1",
+                            data: NeuData,
+                            coordinateSystem: undefined,
+                            universalTransition: true,
+                            animationDurationUpdate: 1000,
+                            renderItem: function (params, api) {
+                                var idx = params.dataIndex;
+                                var viewSize = Math.min(api.getWidth(), api.getHeight());
+                                var r0 = ((parseFloat(radius[0]) / 100) * viewSize) / 2;
+                                var r1 = ((parseFloat(radius[1]) / 100) * viewSize) / 2;
+                                var cx = api.getWidth() * 0.5;
+                                var cy = api.getHeight() * 0.5;
+                                var size = viewSize / 50;
+                                var points = parliamentLayout(
+                                    angles[idx],
+                                    angles[idx + 1],
+                                    Math.PI * 2,
+                                    r0,
+                                    r1,
+                                    size + 3
+                                );
+                                return {
+                                    type: "group",
+                                    children: points.map(function (pt) {
+                                        return {
+                                            type: "circle",
+                                            autoBatch: true,
+                                            shape: {
+                                                cx: cx + pt[0],
+                                                cy: cy + pt[1],
+                                                r: size / 2
+                                            },
+                                            style: {
+                                                fill: NeudefaultPalette[idx % NeudefaultPalette.length]
+                                            }
+                                        };
+                                    })
+                                };
+                            }
+                        }
+                    };
+                })();
+                // -------------------------------------------------------------------------------------------------------------------------------------------
+
+                // 부정 차트 생성
+                var NegChart = echarts.init(document.getElementById("sentimentNegChart"));
+
+
+                // 부정 차트 데이터 설정
+                const NegData = [
+                    { value: Math.round((data[0]['sumConfidenceNeg'] / totalSentiment) * 10000) / 100, name: ' 부정 지수', itemStyle: { color: '#F38872' } },
+                    { value: Math.round((((data[0]['sumConfidenceNeu'] + data[0]['sumConfidencePos']) / totalSentiment) * 10000)) / 100, name: '그 외 지수', itemStyle: { color: '#808080' } }
+                ];
+                // 부정차트 색상 설정
+                const NegdefaultPalette = [
+                    "#F38872",
+                    "#808080"
+                ];
+
+                // 부정 옵션 빈상자
+                var option2;
+
+                // 부정 차트 옵션
+                const NegOption = {
+                    title: {
+                        text: '부정 감정 지수',
+                        left: 'center',
+                        top: 70,
+                        textStyle: {
+                            fontSize: 24, // set the font size to 24
+                            color: '#F38872',
+                            borderRadius: 10,
+                            borderColor: '#000000',
+                            borderWidth: 3
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                    },
+                    series: [
+                        {
+                            name: searchKeyword + ' 지수',
+                            type: "pie",
+                            id: "distribution2",
+                            radius: radius,
+                            label: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: '20',
+                                    fontWeight: 'bold',
+                                },
+                            },
+                            itemStyle: {
+                                borderRadius: 10,
+                                borderColor: '#fff',
+                                borderWidth: 2,
+                            },
+                            labelLine: {
+                                show: true,
+                            },
+                            universalTransition: true,
+                            animationDurationUpdate: 1000,
+                            data: NegData
+
+                        }
+                    ]
+                };
+                // parliament 차트 옵션 설정
+                const NegparliamentOption = (function () {
+                    // 차트 데이터의 합 계산
+                    let sum = NegData.reduce(function (sum, cur) {
+                        return sum + cur.value;
+                    }, 0);
+                    // 각 데이터의 시작 각도 계산
+                    let angles = [];
+                    let startAngle = -Math.PI / 2;
+                    let curAngle = startAngle;
+                    NegData.forEach(function (item) {
+                        angles.push(curAngle);
+                        curAngle += (item.value / sum) * Math.PI * 2;
+                    });
+                    angles.push(startAngle + Math.PI * 2);
+
+                    // parliament 차트 레이아웃 함수
+                    function parliamentLayout(startAngle, endAngle, totalAngle, r0, r1, size) {
+                        let rowsCount = Math.ceil((r1 - r0) / size);
+                        let points = [];
+                        let r = r0;
+                        for (let i = 0; i < rowsCount; i++) {
+                            let totalRingSeatsNumber = Math.round((totalAngle * r) / size);
+                            let newSize = (totalAngle * r) / totalRingSeatsNumber;
+                            for (
+                                let k = Math.floor((startAngle * r) / newSize) * newSize;
+                                k < Math.floor((endAngle * r) / newSize) * newSize - 1e-6;
+                                k += newSize
+                            ) {
+                                let angle = k / r;
+                                let x = Math.cos(angle) * r;
+                                let y = Math.sin(angle) * r;
+                                points.push([x, y]);
+                            }
+                            r += size;
+                        }
+                        return points;
+                    }
+
+                    // parliament 차트 옵션 객체 반환
+                    return {
+                        series: {
+                            type: "custom",
+                            id: "distribution2",
+                            data: NegData,
+                            coordinateSystem: undefined,
+                            universalTransition: true,
+                            animationDurationUpdate: 1000,
+                            renderItem: function (params, api) {
+                                var idx = params.dataIndex;
+                                var viewSize = Math.min(api.getWidth(), api.getHeight());
+                                var r0 = ((parseFloat(radius[0]) / 100) * viewSize) / 2;
+                                var r1 = ((parseFloat(radius[1]) / 100) * viewSize) / 2;
+                                var cx = api.getWidth() * 0.5;
+                                var cy = api.getHeight() * 0.5;
+                                var size = viewSize / 50;
+                                var points = parliamentLayout(
+                                    angles[idx],
+                                    angles[idx + 1],
+                                    Math.PI * 2,
+                                    r0,
+                                    r1,
+                                    size + 3
+                                );
+                                return {
+                                    type: "group",
+                                    children: points.map(function (pt) {
+                                        return {
+                                            type: "circle",
+                                            autoBatch: true,
+                                            shape: {
+                                                cx: cx + pt[0],
+                                                cy: cy + pt[1],
+                                                r: size / 2
+                                            },
+                                            style: {
+                                                fill: NegdefaultPalette[idx % NegdefaultPalette.length]
+                                            }
+                                        };
+                                    })
+                                };
+                            }
+                        }
+                    };
+                })();
+                // --------------------------------------------------------------------------------------------------------------------------------------
+                // 초기 옵션 설정
+                let poscurrentOption = (option = posOption);
+                let neucurrentOption = (option1 = NeuOption);
+                let negcurrentOption = (option2 = NegOption);
+
+                // 2초마다 차트 옵션 변경
+                setInterval(function () {
+                    poscurrentOption = poscurrentOption === posOption ? posparliamentOption : posOption;
+                    PosChart.setOption(poscurrentOption);
+                    neucurrentOption = neucurrentOption === NeuOption ? NeuparliamentOption : NeuOption;
+                    NeuChart.setOption(neucurrentOption);
+                    negcurrentOption = negcurrentOption === NegOption ? NegparliamentOption : NegOption;
+                    NegChart.setOption(negcurrentOption);
+                }, 2000);
+
+                // 차트 옵션 적용
+                if (option && typeof option === "object") {
+                    PosChart.setOption(option);
+                }
+                if (option1 && typeof option1 === "object") {
+                    NeuChart.setOption(option1);
+                }
+                if (option2 && typeof option2 === "object") {
+                    NegChart.setOption(option2);
+                }
+
+                // 창 크기 변경 시 차트 크기 조절
+                window.addEventListener("resize", PosChart.resize);
+                window.addEventListener("resize", NeuChart.resize);
+                window.addEventListener("resize", NegChart.resize);
+
+            })
+            .catch(error => console.log(error));
+    </script>
+
+
+    <!-- 연령별 그래프 -->
+    <script>
+        // 연령별
+        const Yyy = JSON.parse('<%- JSON.stringify(Yyy) %>');
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // type : 'bar' = 막대차트를 의미합니다.
+            type: 'bar', // 
+            data: {
+                labels: ['10대', '20대', '30대', '40대', '50대', '60대이상'],
+                datasets: [{
+                    axis: 'y', // ***가로형 막대로 바꾸는 옵션***
+                    label: '',
+                    backgroundColor: [
+                        '#D4F0F0',
+                        '#C6DBDA',
+                        '#8FCACA',
+                        '#CCE2CB',
+                        '#B6CFB6',
+                        'FFFFFFF',
+                    ],
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: Yyy
+                }]
+            },
+
+            options: {
+
+                indexAxis: 'y', //***가로형 막대로 바꾸는 옵션***
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                }
+            }
+        });
+    </script>
+
+    <!-- 성별별 그래프 -->
+    <script>
+        // 2023.03.14 (오전 10시 22분) 끝
+        // 성별별
+        const Sex = JSON.parse('<%- JSON.stringify(Sex) %>');
+        var ctxi2 = document.getElementById('myCharti2').getContext('2d');
+        var myCharti2 = new Chart(ctxi2, {
+            type: 'doughnut',
+            data: {
+                labels: ['남성', '여성'],
+                datasets: [{
+                    label: '',
+                    data: Sex,
+                    backgroundColor: [
+                        '#AFC4E7',
+                        '#EEAFAF'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+
+            }
+        });
+    </script>
+
+    <!-- 이슈성 그래프 -->
+    <script>
+        // 이슈성
+        const Fre = JSON.parse('<%- JSON.stringify(Fre) %>');
+        var ctxi3 = document.getElementById('myCharti3').getContext('2d');
+        var myCharti3 = new Chart(ctxi3, {
+            type: 'doughnut',
+            data: {
+                labels: ['이슈성', ' '],
+                datasets: [{
+                    label: '',
+                    data: Fre,
+                    backgroundColor: [
+                        '#FFE4AF',
+                        '#FCFFB0'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+
+            }
+        });
+
+    </script>
+
+    <!-- 채팅 모달창 -->
+    <script>
+        // 채팅모달창 켜기
+        function show2() {
+            document.querySelector(".background2").className = "background2 show2";
+        }
+
+        // 채팅모달창 끄기
+        function close2() {
+            document.querySelector(".background2").className = "background2";
+        }
+
+        // 클릭시 일어남
+        document.querySelector("#show2").addEventListener("click", show2);
+        document.querySelector("#close2").addEventListener("click", close2);
+    </script>
+
+    <!-- ? 상세정보 보기 -->
+    <script>
+        const questionBox = document.querySelector(".question-box");
+        const questionInfo = document.querySelector(".question-info");
+
+        questionBox.addEventListener("click", () => {
+            if (questionInfo.style.display === "none") {
+                questionInfo.style.display = "block";
+            } else {
+                questionInfo.style.display = "none";
+            }
+        });
+    </script>
+
+    <!-- 검색창 값없이 검색시 띄우는 알림창 -->
+    <script>
+        function validateSearch() {
+            const searchKeyword = document.getElementById('search').value.trim();
+            if (!searchKeyword) {
+                alert('검색어를 입력해주세요.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <!-- 채팅 구현 하는 스크립트 -->
+    <script>
+        $(document).ready(function () {
+            getChatData();
+            setInterval(getChatData, 2000); // 0.5초마다 업데이트
+        });
+
+        // 시간 데이터를 변환하는 함수입니다.
+        function convertDate(date) {
+            const now = new Date();
+            const diff = now.getTime() - new Date(date).getTime();
+            const second = 1000;
+            const minute = second * 60;
+            const hour = minute * 60;
+            const day = hour * 24;
+
+            if (diff < second) {
+                return "방금 전";
+            } else if (diff < minute) {
+                const seconds = Math.floor(diff / second);
+                return "방금 전";
+            } else if (diff < hour) {
+                const minutes = Math.floor(diff / minute);
+                return `${minutes}분 전`;
+            } else if (diff < day) {
+                const hours = Math.floor(diff / hour);
+                return `${hours}시간 전`;
+            } else {
+                const days = Math.floor(diff / day);
+                return `${days}일 전`;
+            }
+        }
+
+        // 채팅 데이터를 가져오는 함수입니다.
+        function getChatData() {
+            $.ajax({
+                url: '/chat',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    var chatDiv = $('.chat-list');
+                    chatDiv.empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var chatContent = '';
+                        var chatDate = convertDate(data[i].indate);
+                        if (data[i].memNick === '<%= memNick %>') {
+                            chatContent = '<div class="chat-nick">' + data[i].memNick + '</div>' + '<div class="chat-content">' + data[i].content + '</div>';
+                            chatDiv.append('<li class="chat-right">' + chatContent + '<span class="chat-time">' + chatDate + '</span></li>');
+                        } else {
+                            chatContent = '<div class="chat-nick">' + data[i].memNick + '</div>' + '<div class="chat-content">' + data[i].content + '</div>';
+                            chatDiv.append('<li class="chat-left">' + chatContent + '<span class="chat-time">' + chatDate + '</span></li>');
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        $('#chat_btn').click(function () {
+            // Ajax 요청을 보내어 데이터를 받아옵니다.
+            $.ajax({
+                url: '/chat',
+                type: 'POST',
+                data: $('#chat-form').serialize(), // 폼 요소들을 명시적으로 지정합니다.
+                dataType: 'json',
+                success: function (data) {
+                    var chatDiv = $('.chat-list');
+                    var chatContent = data[0].memNick + data[0].content + '<br>';
+                    chatDiv.append(chatContent);
+                    $('#myTextarea').val(''); // 입력창 초기화
+                    getChatData();
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        // 폼 제출시 서버에 메세지를 전송하고, 채팅 데이터를 가져옵니다.
+        $('#chat-form').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/chat',
+                type: 'POST',
+                data: { message: $('#chat-input').val() },
+                success: function (data) {
+                    getChatData();
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    </script>
+
+
+    <!-- 채팅 enter 클릭 시 입력하기 -->
+    <script>
+        $('#myTextarea').on('keydown', function (e) {
+            if (e.keyCode == 13 && !e.shiftKey) {
+                e.preventDefault();
+                $('#chat_btn').click();
+            }
+        });
+    </script>
+
+    <!-- 채팅창 스크롤 하는 기능 -->
+    <script>
+        const chatContainer = document.querySelector('.chat');
+        const chatInput = document.querySelector('#myTextarea');
+
+        // 스크롤이 가장 위쪽인지 확인하는 함수
+        function isScrollAtTop() {
+            return chatContainer.scrollTop === 0;
+        }
+
+        // 스크롤을 가장 위쪽으로 올리는 함수
+        function scrollToTop() {
+            chatContainer.scrollTop = 0;
+        }
+
+        // 스크롤을 가장 아래쪽으로 내리는 함수
+        function scrollToBottom() {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // 새로운 채팅 메시지 입력 시 자동으로 스크롤을 아래로 내리는 함수
+        function scrollToBottomIfAtBottom() {
+            if (isScrollAtBottom()) {
+                scrollToBottom();
+            }
+        }
+
+        // 채팅 입력 이벤트에 스크롤 내리기 함수 연결
+        chatInput.addEventListener('input', () => {
+            scrollToBottomIfAtBottom();
+        });
+
+        // 채팅 메시지가 추가될 때 자동으로 스크롤을 아래로 내리는 함수
+        function onNewChatAdded() {
+            scrollToBottomIfAtBottom();
+        }
+    </script>
+
+    <!-- 스윗 얼럿 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+    <!-- 구글 이동 및 빈값 검색시 알림창 코드 -->
+    <script>
+        $(document).ready(function () {
+            $('#sform').submit(function (event) {
+                const searchKeyword = $('#search').val();
+                const keywords = ['문재인', '윤석열', '심상정', '홍준표', '안철수', '이재명'];
+
+                // 검색어가 keywords 배열에 포함되어 있지 않은 경우, SweetAlert2로 알림창을 띄웁니다.
+                if ($('#search').val().trim() === '') {
+                    Swal.fire({
+                        text: '검색어를 입력해주세요',
+                        icon: 'warning',
+                        confirmButtonText: '확인'
+                    });
+                } else if (!keywords.includes(searchKeyword)) {
+                    event.preventDefault(); // 기본 동작인 검색 요청을 취소합니다.
+                    Swal.fire({
+                        icon: 'warning',
+                        text: `${searchKeyword}은 검색결과를 제공하지 않습니다.`,
+                        showCancelButton: true,
+                        confirmButtonText: '구글로 이동',
+                        cancelButtonText: '취소',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = `https://www.google.com/search?q=${searchKeyword}`;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- View탭 크롤링 -->
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'http://127.0.0.1:5000/search',
+                type: 'GET',
+                data: { keyword: '<%= searchKeyword %>' },
+                success: function (response) {
+                    // JSON 데이터를 가공하여 테이블 형식으로 출력하는 코드
+                    var table = "<table class='table'>";
+                    table += "<thead><tr><th scope='col'>순위</th><th scope='col'>작성자</th><th scope='col'>제목</th><th scope='col'>본문</th><th scope='col'>작성일</th></tr></thead>";
+                    table += "<tbody>";
+                    $.each(response['list'], function (i, item) {
+                        var row = "<tr>";
+                        row += "<th scope='row'>" + (i + 1) + "</th>";
+                        row += "<td>" + response['writer'][i] + "</td>";
+                        row += "<td style='font-weight: bold;'><a href='" + item + "' target='_blank'>" + response['title'][i] + "</a></td>";
+                        row += "<td>" + response['content'][i] + "</td>";
+                        row += "<td>" + response['post_date'][i] + "</td>";
+                        row += "</tr>";
+                        table += row;
+                    });
+                    table += "</tbody></table>";
+                    $('#search-result-table').html(table); // 검색 결과를 출력하는 div의 id를 설정하여 출력
+                    $('#search-result-table').show();
+                },
+                error: function (error) {
+                    console.log('Ajax 요청 실패: ', error.statusText);
+                    console.log('응답 코드: ', error.status);
+                    console.log('응답 내용: ', error.responseText);
+                }
+            });
+        });
+    </script>
+
+</body> <!-- 바디태그 끝 -->
+
+</html>

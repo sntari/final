@@ -1,0 +1,197 @@
+/* !2023.03.06 */
+/* 스와이퍼 css */
+/* 후보자 스와이퍼 css */
+
+/* 2023.03.18 폰트추가 */
+/* 폰트 */
+@font-face {
+  font-family: 'OAGothic-ExtraBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BookkMyungjo-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Bd.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ONE-Mobile-POP';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'HSSaemaul-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/HSSaemaul-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KIMM_Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KIMM_Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'RIDIBatang';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+/* 1) 스와이퍼의 크기 */
+.mySwiper {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0);
+}
+
+
+/* 2) 스와이퍼 슬라이드 */
+  .mySwiper_slid {
+  text-align: center;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  
+}
+
+/* 3) 슬라이드 내부 img */
+.mySwiper_slid img {
+  display: block;
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 4) 스와이퍼 페이지 네이션 버튼 */
+#swiper_btn{
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  border-radius: 5px;
+}
+
+#swiper_btn:hover{
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 5px;
+}
+
+
+
+
+
+
+
+/* 스와이퍼 크기 */
+/* 2023.03.18 NEW!!!!! */
+/* 연관검색어 스와이퍼 css */
+.swiper2 {
+  width: 100%;
+  height: 100px;
+}
+
+/* 스와이퍼 슬라이드 크기 */
+.slide2 {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #495057;
+  font-family: 'RIDIBatang';
+}
+
+/* 2023.03.18 */
+/* 마우스 올렸을때 변경 */
+.slide2:hover {
+  text-align: center;
+  font-size: 18px;
+  background: #e0e2e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  /* 1) */
+  /* font-family: 'HSSaemaul-Regular'; */
+  /* 2) */
+  /* font-family: 'KIMM_Bold'; */
+  /* 3) */
+  font-family: 'RIDIBatang';
+}
+
+
+/* 스와이퍼를 감싸고 있는 컨테이너 */
+.swiper2_con {
+position: relative;
+
+}
+
+/* 스와이프 페이지네이션(하단에 위치한 검은색) */
+.swiper-pagination {
+bottom: -20px;
+position: absolute;
+width: 100%;
+height: 30px;
+align-items: center;
+justify-content: center;
+display: flex;
+flex-direction: row;
+gap: 5px;
+}
+
+/* 2023.03.18 컨테이너의 높이(height) 변경 */
+/* 전체 3명분 스와이프를 묶고 있는 큰 div */
+.container{
+  display: flex;
+  width: 1280px;
+  height: 300px;
+  margin: auto;
+  }
+
+/* 2023.03.18 박스의 높이(height) 변경 */
+/* 사람 한명분 스와이프 묶고 있는 div */
+.boxi1{
+  flex-grow: 1;
+  width: 200px;
+  height: 200px;
+  border: solid 3px;
+  border-color: #ffffff00;
+  }
+  
+
+
+/* 2023.03.18 폰트추가 */
+/* 컨테이너 안에 존재하는 h2 */
+.container h2{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  /* 1) */
+  /* font-family: 'OAGothic-ExtraBold'; */
+  /* 2) */
+  /* font-family: 'ONE-Mobile-POP';
+  font-weight: lighter; */
+  /* 3) */
+  /* font-family: 'BookkMyungjo-Bd'; */
+  /* 4) */
+  font-family: 'RIDIBatang';
+  font-weight: bold;
+  }
+
+
+
